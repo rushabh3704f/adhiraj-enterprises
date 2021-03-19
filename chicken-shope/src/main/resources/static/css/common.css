@@ -1,0 +1,228 @@
+.background-color {
+    background-color: #E9E9E9;
+}
+
+.row-bg {
+    background-color: #FFF;
+    /* box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px !important; */
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+}
+
+.user-detail input {
+    /* background-color: #E9E9E9; */
+}
+
+.form-control-sm {
+    border: 1px solid #ced4da;
+    border-radius: 0px!important;
+    display: block;
+    width: 100%;
+    /* background-color: #E9E9E9; */
+}
+
+.form-control-sm:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    /* box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25); */
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1)!important;
+}
+
+.goods-input {
+    height: calc(1em + .5rem + 2px)!important;
+}
+
+.user-detail label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.billing-name-box {
+    background-color: #E9E9E9;
+    border-radius: 5px;
+}
+
+.billing-name-txt {
+    background-color: #FFF!important;
+}
+
+.hline {
+    /* margin-top: 1rem; */
+    margin-bottom: 1rem;
+    border: 0;
+    /* background-color: #E9E9E9;
+    border-top: 1px solid rgba(0, 0, 0, .1); */
+    border-top: 3px solid #E9E9E9;
+    box-sizing: content-box;
+}
+
+.goods-name {
+    font-size: 16px;
+    font-weight: 400;
+    color: #7f7f7fe0;
+}
+
+.goods-name small {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.inputWithIcon input[type="text"] {
+    padding-left: 20px;
+}
+
+.inputWithIcon {
+    position: relative;
+}
+
+.inputWithIcon i {
+    position: absolute;
+    left: 0;
+    top: 0px;
+    padding: 6px 8px;
+    color: #aaa;
+    transition: 0.3s;
+}
+
+.inputWithIcon input[type="text"]:focus+i {
+    color: dodgerBlue;
+}
+
+.inputWithIcon.inputIconBg i {
+    background-color: #aaa;
+    color: #fff;
+    padding: 9px 4px;
+    border-radius: 4px 0 0 4px;
+}
+
+.inputWithIcon.inputIconBg input[type="text"]:focus+i {
+    color: #fff;
+    background-color: dodgerBlue;
+}
+
+.total-bill label {
+    font-size: 17px;
+}
+
+
+/* .total-bill input {
+    background-color: #E9E9E9;
+} */
+
+.client-list-heading,
+.add-new-client {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px 0px 10px 0px;
+}
+
+.page-path {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 10px 0px 10px 0px;
+    color: #676a70;
+}
+
+.page-path .page-name {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.hidden {
+    display: none;
+}
+
+.add-client-proprity label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.add-client-proprity input,
+.add-client-proprity textarea {
+    /* background-color: #E9E9E9; */
+    border-radius: 0px;
+}
+
+.table td,
+.table th {
+    padding: .5rem!important;
+}
+
+.datatable-class label {
+    text-transform: capitalize;
+}
+
+.datatable-class .form-control {
+    min-height: 30px;
+}
+
+.ibox {
+    box-shadow: 0rem 0rem rgba(0, 0, 0, .15)!important;
+}
+
+
+/* .ibox .card-header {
+    background: #4285f4;
+} */
+
+.ibox .income {
+    color: #676a70;
+    font-size: 16px;
+    margin: 0 0 7px;
+    padding: 0;
+    text-overflow: ellipsis;
+    float: none;
+}
+
+.ibox .income-time {
+    background-color: #1c84c6;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    padding: 3px 8px;
+    text-shadow: none;
+    border-radius: 0.25em;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.ibox .ibox-content {
+    background-color: #ffffff;
+    color: inherit;
+    padding: 15px 20px 20px 20px;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.ibox .ibox-content .card-title,
+.ibox .ibox-content .card-title i {
+    color: #676a70;
+    font-weight: 300;
+}
+
+.amount-in-word .word-amount {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.company-detail .company-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.company-detail .company-name1 {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+@media only screen and (max-width: 767px) {
+    .add-product-to-list-table,
+    .add-product-price-table,
+    .client-list-table {
+        overflow-x: scroll;
+    }
+}
