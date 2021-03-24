@@ -149,6 +149,7 @@ public class DigitalShopeService {
 	public void createProductForSale(ShopeCreateProductForSale shopeCreateProductForSale) {
 		// TODO Auto-generated method stub
 		shopeCreateProductForSale.setIsActive("A");
+		shopeCreateProductForSale.setProductName(shopeCreateProductForSale.getProductName()+" ("+shopeCreateProductForSale.getUnitType()+ ")");
 		shopeCreateProductForSaleRepository.save(shopeCreateProductForSale);
 
 	}

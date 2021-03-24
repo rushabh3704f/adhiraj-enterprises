@@ -206,6 +206,7 @@
         
     function addNewClient(){
   	  var clientId=0;
+  	  //${Constants.BASE_URL}
 	   $.ajax({
 	        url : 'http://localhost:8080/digitalShope/getClientId?clientId='+ clientId,
 	        type : 'post',
