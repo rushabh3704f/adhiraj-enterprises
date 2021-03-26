@@ -87,7 +87,7 @@
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                        <form:hidden path = "id" id = "id"/>
                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add-new-employee-modal" onclick="updateEmployeeData('${shopeCreateEmployee.employeeId}','${shopeCreateEmployee.id}','${shopeCreateEmployee.firstName}','${shopeCreateEmployee.middleName}','${shopeCreateEmployee.lastName}','${shopeCreateEmployee.phoneNumber}','${shopeCreateEmployee.designation}','${shopeCreateEmployee.salary}','${shopeCreateEmployee.address}');">Update</button>                                    
-                                        &nbsp; &nbsp;<a href="${contextPath}/deleteEmployeeById?employeeId=${shopeCreateEmployee.id}"><button type="button" class="btn btn-danger btn-sm">Remove</button></a>
+                                        &nbsp; &nbsp;<a href="/deleteEmployeeById?employeeId=${shopeCreateEmployee.id}"><button type="button" class="btn btn-danger btn-sm">Remove</button></a>
                                     </div>
                                 </td>
                             </tr>
@@ -240,7 +240,7 @@
       
       var clientId=0;
    	   $.ajax({
-   	        url : 'http://localhost:8080/digitalShope/getEmployeeId?clientId='+ clientId,
+   	        url : '${BASE_URL}/getEmployeeId?clientId='+ clientId,
    	        type : 'post',
    	        success : function(data) {
    	        	      $("#employeeId").val(data);

@@ -63,9 +63,8 @@
                             </div>
                             <div class="col-md-6">
                                 <p class="mb-1 text-black">Delivery To:</p>
-                                <p class="mb-1 text-primary"><strong>Akram Khan</strong></p>
-                                <p class="mb-1">291/d/1, 291, Jawaddi Kalan, Ludhiana, Punjab 141002, India
-                                </p>
+                                <p class="mb-1 text-primary"><strong>${billName}</strong></p>
+                                <p class="mb-1">${billAddress}</p>
                             </div>
                         </div>
                         <div class="row mt-5">

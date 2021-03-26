@@ -53,18 +53,18 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <p class="mb-1">Ordered from:</p>
-                                <h6 class="mb-1 text-black"><strong>Akram Khan</strong></h6>
+                                <h6 class="mb-1 text-black"><strong>${billName}</strong></h6>
                                 <p class="mb-1">
-                                    Plot No. 111, Krishnakamal CHS LTD, Shop No. 32, Sector 21, Nerul, Navi Mumbai, Maharashtra 400706
+                                  ${billAddress}
                                 </p>
                             </div>
                             <div class="col-md-4">
                                 <p class="mb-1 text-black">Order No: <strong>${productDetailsForSaleList[0].billingNumber}</strong></p>
-                                <p class="mb-1">Order placed at: <strong>${systemDate}</strong></p>
+                                <p class="mb-1">Order placed at: <strong>${orderPlaceDate}</strong></p>
                                 <p class="mb-1">
-                                    <strong>Phone:</strong> 9898989898
+                                    <strong>Phone:</strong> ${phoneNumber}
                                 </p>
-                                <p class="mb-1">Order Status: <strong class="text-success">Paid</strong></p>
+                                <!-- <p class="mb-1">Order Status: <strong class="text-success">Paid</strong></p> -->
                             </div>
                         </div>
                         <div class="row mt-2">

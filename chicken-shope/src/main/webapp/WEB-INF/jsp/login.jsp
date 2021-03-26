@@ -17,11 +17,11 @@
 
     <link rel="icon" type="image/png" href="https://zmdownload.zoho.com/view?attachId=138223803554330290&entityType=1&entityId=1603087703852110003&accId=5734614000000008002&height=1024&width=1024">
 
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome/css/all.min.css" rel="stylesheet">
 
-    <link href="/icofont/icofont.min.css" rel="stylesheet">
+    <link href="vendor/icofont/icofont.min.css" rel="stylesheet">
 
     <link href="css/maizil.css" rel="stylesheet">
 </head>

@@ -99,7 +99,7 @@
                                                						    ,'${shopeCreateEmployeeSalary.createdOn}'
                                                							)">
                                                Update</button>
-                                        &nbsp;<a href="${contextPath}/deleteSalaryById?clientId=${shopeCreateEmployeeSalary.id}"><button type="button" class="btn btn-danger btn-sm">Remove</button></a>
+                                        &nbsp;<a href="/deleteSalaryById?clientId=${shopeCreateEmployeeSalary.id}"><button type="button" class="btn btn-danger btn-sm">Remove</button></a>
                                     </div>
                                 </td>
                             </tr>
@@ -246,7 +246,6 @@
 
 
      function updateEmpSalById(id,fname,ldays,sal,payment,pending,paymentDate,createdOn){
-    	 alert(createdOn);
     	 //===================================================
     	 /* var d = new Date(createdOn);
     	 const formatYmd = date => d.toISOString().slice(0, 10);
@@ -286,7 +285,7 @@
 		    	//alert(billingNameId);
 		    	//--------------------
 		    	   $.ajax({
-		   	        url : 'http://localhost:8080/digitalShope/getEmployeeSalary?employeeId='+ employeeId,
+		   	        url : '${BASE_URL}/getEmployeeSalary?employeeId='+ employeeId,
 		   	        type : 'post',
 		   	        success : function(data) {
 		   	  				  //alert(data.salary);

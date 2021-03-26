@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.internal.compiler.impl.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ import com.shope.dev.repository.PaymentHistoryDetailsRepository;
 import com.shope.dev.repository.ProductDetailsForSaleRepository;
 import com.shope.dev.repository.ShopeCreateEmployeeSalaryRepository;
 import com.shope.dev.repository.UnitTypeMasterRepository;
+import com.shope.dev.service.Constants;
 import com.shope.dev.service.DigitalShopeService;
 import com.shope.dev.service.Utils;
 
@@ -96,6 +98,8 @@ public class DigitalShopeController {
 		
 	    model.addAttribute("shopeCreateOrderForSale",billDetailsForSale);
 	    model.addAttribute("systemDate",utils.getCurrentDate());
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+
 		return "createNewOrder";
 	}
 	
@@ -667,15 +671,10 @@ public class DigitalShopeController {
 	
 	@RequestMapping("/invoiceDetails")
 	public String invoiceDetails(Model model, @RequestParam("billNumber") String billNumber) {
-		
 
-
-		List<ProductDetailsForSale>productDetailsForSaleList = digitalShopeService.getAllProductDetailsForSaleList(billNumber);
-		
-		List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
-	    
-		List<ProductDetailsForSale>productDetailsForSaleListWithProductName =new ArrayList<>();
-		
+		List<ProductDetailsForSale>productDetailsForSaleList = digitalShopeService.getAllProductDetailsForSaleList(billNumber);		
+		List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();    
+		List<ProductDetailsForSale>productDetailsForSaleListWithProductName =new ArrayList<>();	
 		
 		for (ProductDetailsForSale productDetailsForSale : productDetailsForSaleList) {
 			
@@ -688,6 +687,13 @@ public class DigitalShopeController {
 			}
 		}
 		
+		BillingDetailsForSale shopeCreateClient = digitalShopeService.getAllBillingDetailsForSale(billNumber);		
+	    model.addAttribute("billName",shopeCreateClient.getBillingName());
+	    model.addAttribute("billAddress",shopeCreateClient.getAddress());
+	    model.addAttribute("phoneNumber",shopeCreateClient.getPhoneNumber());
+	    model.addAttribute("orderPlaceDate",shopeCreateClient.getCreatedOn());
+
+
 		model.addAttribute("productDetailsForSaleList",productDetailsForSaleListWithProductName);	
 	    model.addAttribute("systemDate",utils.getCurrentDate());
 		return "invoiceDetails";
@@ -712,6 +718,13 @@ public class DigitalShopeController {
 				}
 			}
 		}
+		
+		BillingDetailsForPurchase shopeCreateClient = digitalShopeService.getBillingDetailsForPurchase(billNumber);		
+	    model.addAttribute("billName",shopeCreateClient.getBillingName());
+	    model.addAttribute("billAddress",shopeCreateClient.getAddress());
+	    model.addAttribute("phoneNumber",shopeCreateClient.getPhoneNumber());
+	    model.addAttribute("orderPlaceDate",shopeCreateClient.getCreatedOn());
+		
 		
 		model.addAttribute("productDetailsForPurchaseList",productDetailsForPurchaseListWithProductName);	
 	    model.addAttribute("systemDate",utils.getCurrentDate());

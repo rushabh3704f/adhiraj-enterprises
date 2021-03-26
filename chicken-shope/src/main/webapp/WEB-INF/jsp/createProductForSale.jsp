@@ -93,7 +93,7 @@
                                         		,'${shopeCreateProductForSaleList.productId}'
                                         		,'${shopeCreateProductForSaleList.rate}')">
                                          Update</button>
-                                        &nbsp;<a href="${contextPath}/deleteCreatedSaleProductById?saleProductId=${shopeCreateProductForSaleList.id}"><button type="button" class="btn btn-danger btn-sm">Remove</button></a>
+                                        &nbsp;<a href="/deleteCreatedSaleProductById?saleProductId=${shopeCreateProductForSaleList.id}"><button type="button" class="btn btn-danger btn-sm">Remove</button></a>
                                     </div>
                                 </td>
                             </tr>
