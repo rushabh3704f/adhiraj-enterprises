@@ -83,9 +83,9 @@
 								<td>${billingDetailsForPurchaseList.createdOn}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="${contextPath}/purchaseOrderListByBillNumber?billNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">View</button></a>
-                                        &nbsp;<a href="${contextPath}/invoiceDetailsPurchase?billNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">Invoice</button></a>
-                                        &nbsp;<a href="${contextPath}/paymentHistoryDetailsPurchase?billingNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">Payment History</button></a>
+                                        <a href="/purchaseOrderListByBillNumber?billNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">View</button></a>
+                                        &nbsp;<a href="/invoiceDetailsPurchase?billNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">Invoice</button></a>
+                                        &nbsp;<a href="/paymentHistoryDetailsPurchase?billingNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">Payment History</button></a>
                                         &nbsp;<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add-new-employee-modal" onclick="rePayment('${billingDetailsForPurchaseList.billingNumber}','${billingDetailsForPurchaseList.billAmount}','${billingDetailsForPurchaseList.paidAmount}','${billingDetailsForPurchaseList.unPaidAmount}');">Re-Pay</button>                                    
                                    
                                     </div>

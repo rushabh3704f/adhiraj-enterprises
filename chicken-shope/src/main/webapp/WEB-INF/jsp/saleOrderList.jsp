@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-6 col-6">
                     <div class="add-new-client float-right mt-3">
-                        <a href="${contextPath}/createNewOrder" class="btn btn-success btn-sm">New Order</a>
+                        <a href="/createNewOrder" class="btn btn-success btn-sm">New Order</a>
                     </div>
                 </div>
             </div>
@@ -83,9 +83,9 @@
 								<td>${billingDetailsForSaleList.createdOn}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="${contextPath}/saleOrderListByBillNumber?billNumber=${billingDetailsForSaleList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">View</button></a>
-                                        &nbsp;<a href="${contextPath}/invoiceDetails?billNumber=${billingDetailsForSaleList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">Invoice</button></a>
-                                        &nbsp;<a href="${contextPath}/paymentHistoryDetails?billingNumber=${billingDetailsForSaleList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">Payment History</button></a>
+                                        <a href="/saleOrderListByBillNumber?billNumber=${billingDetailsForSaleList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">View</button></a>
+                                        &nbsp;<a href="/invoiceDetails?billNumber=${billingDetailsForSaleList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">Invoice</button></a>
+                                        &nbsp;<a href="/paymentHistoryDetails?billingNumber=${billingDetailsForSaleList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">Payment History</button></a>
                                         &nbsp;<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add-new-employee-modal" onclick="rePayment('${billingDetailsForSaleList.billingNumber}','${billingDetailsForSaleList.billAmount}','${billingDetailsForSaleList.paidAmount}','${billingDetailsForSaleList.unPaidAmount}');">Re-Pay</button>                                    
                                     </div>
                                 </td>

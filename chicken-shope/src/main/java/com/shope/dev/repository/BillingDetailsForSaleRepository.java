@@ -16,6 +16,12 @@ public interface BillingDetailsForSaleRepository extends JpaRepository<BillingDe
 	
 	@Query(value = "SELECT * FROM billing_details_for_sale m where is_active='A'", nativeQuery = true)
 	public List<BillingDetailsForSale> getAllCreateOrderForSale();
+	
+	
+	@Query(value = "SELECT * FROM billing_details_for_sale m where is_active='A' and billing_number=:billing_number", nativeQuery = true)
+	public BillingDetailsForSale getCreateOrderForSale(@Param("billing_number") String billing_number);
+	
+	
 
 	@Modifying
 	@Transactional
@@ -40,7 +46,7 @@ public interface BillingDetailsForSaleRepository extends JpaRepository<BillingDe
 
 	@Modifying
 	@Transactional
-	@Query(value = "UPDATE billing_details_for_sale set is_active ='D',bill_amount-=:amount where billing_number=:billing_number", nativeQuery = true)
+	@Query(value = "UPDATE billing_details_for_sale set is_active ='D',bill_amount=bill_amount-:amount where billing_number=:billing_number", nativeQuery = true)
 	public void deletePoductUpdateAmount(@Param("billing_number") String billing_number,@Param("amount") String amount);
 	
 }

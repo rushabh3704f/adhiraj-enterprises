@@ -1,4 +1,4 @@
-/*package com.shope.dev.service;
+package com.shope.dev.service;
 
 import javax.annotation.PostConstruct;
 
@@ -8,13 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class Constants {
 
-	@Value("${BASE.URL}:${server.port}")
+	// @Value("${BASE.URL}:${server.port}")
+	@Value("${BASE.URL}")
 	private String baseURL;
 
 	@PostConstruct
 	public void init() {
 		BASE_URL = baseURL;
 	}
+
 	public static String BASE_URL;
+
 }
-*/

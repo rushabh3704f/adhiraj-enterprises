@@ -80,7 +80,7 @@
                                  <td>${productDetailsForSaleList.sum}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="${contextPath}/deleteProductDetailsForSale?productId=${productDetailsForSaleList.id}&billNumber=${productDetailsForSaleList.billingNumber}" class="btn btn-dark btn-sm">Delete</a>
+                                        <a href="/deleteProductDetailsForSale?productId=${productDetailsForSaleList.id}&billNumber=${productDetailsForSaleList.billingNumber}" class="btn btn-dark btn-sm">Delete</a>
                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add-new-employee-modal" onclick="updateProduct('${productDetailsForSaleList.id}','${productDetailsForSaleList.billingNumber}','${productDetailsForSaleList.productName}','${productDetailsForSaleList.unit}','${productDetailsForSaleList.rate}','${productDetailsForSaleList.sum}');">Update</button>                                    
                                     </div>
                                 </td>

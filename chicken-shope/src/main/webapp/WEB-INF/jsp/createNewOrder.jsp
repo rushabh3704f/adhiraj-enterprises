@@ -202,7 +202,7 @@
                                 <td>
                                     <form:hidden path = "id" id = "id" value="${shopeCreateOrderForSale.id}"/>
                                     <div class="btn-group" role="group" aria-label="Basic example">                               
-                                      <a href="#" onclick="submitFormByAction('shopeCreateOrderForSale','<spring:url value="${contextPath}/deleteProductById"/>')">
+                                      <a href="#" onclick="submitFormByAction('shopeCreateOrderForSale','<spring:url value="/deleteProductById"/>')">
                                        <button type="button" class="btn btn-danger btn-sm">Remove</button></a>                                        
                                     </div>
                                     <%--  &nbsp; &nbsp;<a href="${contextPath}/deleteProductById?productId=${shopeCreateOrderForSale.id}"><button type="button" class="btn btn-danger btn-sm">Remove</button></a> --%>
@@ -261,7 +261,7 @@
     function getDropdownId(elem) {
     	  var productId=elem.value;
     		   $.ajax({
-    		        url : 'http://localhost:8080/digitalShope/getDropdownValue?productId='+ productId,
+    		        url : '${BASE_URL}/getDropdownValue?productId='+ productId,
     		        type : 'post',
     		        success : function(data) {
       		          $("#perKgOrPiceId").val(data.unitType);
@@ -277,8 +277,8 @@
     
     $("#billingName").change(function () {
         var end = this.value;
-       $.ajax({
-	        url : 'http://localhost:8080/digitalShope/getDropdownValue?productId='+ productId,
+        $.ajax({
+	        url : '${BASE_URL}/getDropdownValue?productId='+ productId,
 	        type : 'post',
 	        success : function(data) {
 			  $("#productUnitId").val(data.unit);
@@ -399,7 +399,7 @@
 		    	//alert(billingNameId);
 		    	//--------------------
 		    	   $.ajax({
-		   	        url : 'http://localhost:8080/digitalShope/getBillingDetails?billingNameId='+ billingNameId,
+		   	        url : '${BASE_URL}/getBillingDetails?billingNameId='+ billingNameId,
 		   	        type : 'post',
 		   	        success : function(data) {
 		   	        	

@@ -10,12 +10,17 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shope.dev.model.BillingDetailsForPurchase;
+import com.shope.dev.model.BillingDetailsForSale;
 
 @Repository
 public interface BillingDetailsForPurchaseRepository extends JpaRepository<BillingDetailsForPurchase, Long> {
 
 	@Query(value = "SELECT * FROM billing_details_for_purchase m where is_active='A'", nativeQuery = true)
 	public List<BillingDetailsForPurchase> getAllCreateOrderForPurchase();
+	
+	
+	@Query(value = "SELECT * FROM billing_details_for_purchase m where is_active='A' and billing_number=:billing_number", nativeQuery = true)
+	public BillingDetailsForPurchase getCreateOrderForPurchase(@Param("billing_number") String billing_number);
 
 	@Modifying
 	@Transactional

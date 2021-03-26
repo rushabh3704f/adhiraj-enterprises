@@ -203,7 +203,7 @@ public class DigitalShopeService {
 	public void deleteSoldProductById(String productId,String amount) {
 		// TODO Auto-generated method stub
 		billingDetailsForSaleRepository.deletePoductUpdateAmount(productId,amount);
-		//tempProductDetailsForSaleRepository.deleteProductFromListByProductId(productId);
+		tempProductDetailsForSaleRepository.deleteProductFromListByProductId(productId);
 	}
 
 	public void addItemInList(BillingDetailsForSale billDetailsForSale) {
@@ -233,8 +233,7 @@ public class DigitalShopeService {
 
 	public List<TempProductDetailsForSale> getAllProductDetailsByBillingNumber() {
 		// TODO Auto-generated method stub
-		List<TempProductDetailsForSale> tempProductDetailsForSale = tempProductDetailsForSaleRepository
-				.getAllProductDetailsByBillingNumber();
+		List<TempProductDetailsForSale> tempProductDetailsForSale = tempProductDetailsForSaleRepository.getAllProductDetailsByBillingNumber();
 		return tempProductDetailsForSale;
 	}
 
@@ -496,5 +495,17 @@ public class DigitalShopeService {
 		 paymentHistoryDetailsPurchase.setCreatedOn(Utils.getCurrentDate());
 		 paymentHistoryDetailsPurchaseRepository.save(paymentHistoryDetailsPurchase);
 	}
+
+	public BillingDetailsForSale getAllBillingDetailsForSale(String billNumber) {
+		// TODO Auto-generated method stub
+	    BillingDetailsForSale billingDetailsForSaleList = billingDetailsForSaleRepository.getCreateOrderForSale(billNumber);
+		return billingDetailsForSaleList;
+	}
+
+	public BillingDetailsForPurchase getBillingDetailsForPurchase(String billNumber) {
+		// TODO Auto-generated method stub
+		BillingDetailsForPurchase billingDetailsForPurchase = billingDetailsForPurchaseRepository.getCreateOrderForPurchase(billNumber);
+		return billingDetailsForPurchase;
+	 }
 
 }
