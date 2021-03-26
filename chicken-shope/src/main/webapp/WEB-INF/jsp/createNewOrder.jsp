@@ -46,6 +46,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="row row-bg user-detail mt-1">
                 <div class="col-md-7">
                     <div class="row mt-2">
@@ -93,7 +94,6 @@
                                     <div class="form-group row">
                                         <label for="client-name" class="col-sm-12 text-center col-form-label">Client Name</label>
                                           
-                                    
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <form:input path="clientName" type="text" class="billing-name-txt form-control-sm" name="clientNameId" id="clientNameId"/>
+                                            <form:input path="clientName" autocomplete="off" type="text" class="billing-name-txt form-control-sm" name="clientNameId" id="clientNameId"/>
                                             <span id="clientNameError" style="color:red"></span>
                                         </div>
                                     </div>

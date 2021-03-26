@@ -138,7 +138,7 @@
                             <label for="product-name" class="col-form-label">Product Name:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="productName" type="text" class="form-control-sm" name="productNameId" id="productNameId" placeholder="Enter Product Name"/>
+                            <form:input path="productName" type="text" autocomplete="off" class="form-control-sm" name="productNameId" id="productNameId" placeholder="Enter Product Name"/>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -146,7 +146,7 @@
                             <label for="unit" class="col-form-label">Unit:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="unit" type="text" class="form-control-sm" name="unitId" id="unitId" placeholder="Enter Unit"/>
+                            <form:input path="unit" type="text" autocomplete="off" class="form-control-sm" name="unitId" id="unitId" placeholder="Enter Unit"/>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -166,7 +166,7 @@
                             <label for="rate" class="col-form-label">Rate:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="rate" type="text" class="form-control-sm" name="rateId" id="rateId" placeholder="Enter Rate"/>
+                            <form:input path="rate" type="text" autocomplete="off" class="form-control-sm" name="rateId" id="rateId" placeholder="Enter Rate"/>
                         </div>
                     </div>
                 </div>
