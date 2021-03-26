@@ -66,7 +66,7 @@
                             <div class="form-group row">
                                 <label for="contact" class="col-sm-3 col-form-label">Phone:</label>
                                 <div class="col-sm-9">
-                                    <form:input path="phoneNumber" type="text" class=" form-control-sm" name="phoneNumberId" id="phoneNumberId"/>
+                                    <form:input path="phoneNumber" autocomplete="off" type="text" class=" form-control-sm" name="phoneNumberId" id="phoneNumberId"/>
                                      <span id="phoneNumberError" style="color:red"></span>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                             <div class="form-group row">
                                 <label for="client-address" class="col-sm-2 col-form-label">Address:</label>
                                 <div class="col-sm-10">
-                                    <form:input path="address" type="text" class=" form-control-sm" name="contact" id="clientAddressId"/>
+                                    <form:input path="address" autocomplete="off" type="text" class=" form-control-sm" name="contact" id="clientAddressId"/>
                                     <span id="addressError" style="color:red"></span>
                                 
                                 </div>
@@ -143,7 +143,7 @@
                  <div class="col-md-2 mt-2">
                     <div class="form-group">
                         <label for="product-unit">Unit Type</label>
-                        <form:input path="perKgOrPice" type="text" autocomplete="off" class=" form-control form-control-sm " id="perKgOrPiceId"  name="perKgOrPice" placeholder="perKgOrPice"/>
+                        <form:input path="perKgOrPice" type="text" autocomplete="off" class=" form-control form-control-sm " id="perKgOrPiceId"  name="perKgOrPice" placeholder="Per Kg Or Pice"/>
                     </div>
                 </div>
                 
@@ -163,7 +163,7 @@
                   <div class="col-md-2 mt-2">
                     <div class="form-group">
                         <label for="product-rate">Total</label>
-                        <form:input path="sum" type="text" autocomplete="off" class=" form-control form-control-sm " id="sumId" name="product-rate" placeholder="Product Rate"/>
+                        <form:input path="sum" type="text" autocomplete="off" class=" form-control form-control-sm " id="sumId" name="product-rate" placeholder="Total Product Rate"/>
                     </div>
                 </div>
                 
