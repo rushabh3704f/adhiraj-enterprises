@@ -34,7 +34,9 @@
 
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-    <form:form name="eclgsOffer" id="porto" commoandName="eclgsOffer" modelAttribute="eclgsOffer" action="" method="post">
+	<spring:url value="/productDetailsForPurchase" var="url"></spring:url>
+	
+    <form:form name="productDetailsForPurchase" id="productDetailsForPurchase" commoandName="productDetailsForPurchase" modelAttribute="productDetailsForPurchase" action="${url}" method="post">
 	<jsp:include page="header.jsp" />
     <section class="section pt-5 pb-5 maizil-not-found-page margin-top background-color">
         <div class="container-fluid pl-5 pr-5">
@@ -49,7 +51,7 @@
                 </div>
                 <div class="col-md-6 col-6">
                     <div class="add-new-client float-right mt-3">
-                        <a href="purchase-order.html" class="btn btn-success btn-sm">New Order</a>
+                        <a href="/createNewPurchaseOrder" class="btn btn-success btn-sm">New Order</a>
                     </div>
                 </div>
             </div>
@@ -64,6 +66,7 @@
                                 <th>Unit</th>
                                 <th>Rate</th>
                                 <th>Sum</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,12 +78,83 @@
                                 <td>${productDetailsForPurchaseList.unit}</td>
                                 <td>${productDetailsForPurchaseList.rate}</td>
                                  <td>${productDetailsForPurchaseList.sum}</td>
+                                  <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a href="/deleteProductDetailsForPurchase?productId=${productDetailsForPurchaseList.id}&billNumber=${productDetailsForPurchaseList.billingNumber}" class="btn btn-dark btn-sm">Delete</a>
+                                       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add-new-employee-modal-u" onclick="updateProductPurchase('${productDetailsForPurchaseList.id}','${productDetailsForPurchaseList.billingNumber}','${productDetailsForPurchaseList.productName}','${productDetailsForPurchaseList.unit}','${productDetailsForPurchaseList.rate}','${productDetailsForPurchaseList.sum}');">Update</button>                                    
+                                    </div>
+                                </td>
                             </tr>
                             </c:forEach>
                     </table>
                 </div>
             </div>
         </div>
+        
+        
+        <div class="modal fade in" id="add-new-employee-modal-u" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Update</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body add-client-proprity">
+                
+                    <div class="row mb-2">
+                        <div class="col-md-3 pr-0">
+                            <label for="employee-name" class="col-form-label">Bill Number:</label>
+                        </div>
+                        <div class="col-md-9">
+                            <form:input path="billingNumber" type="text" class="form-control-sm" name="billingNumber" id="billingNumberId"/>
+                        </div>
+                    </div>
+                      <div class="row mb-2">
+                        <div class="col-md-3 pr-0">
+                            <label for="employee-name" class="col-form-label">Product Name:</label>
+                        </div>
+                        <div class="col-md-9">
+                            <form:input path="productName" type="text" class="form-control-sm" name="productId" id="productId"/>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-3 pr-0">
+                            <label for="employee-name" class="col-form-label">Unit:</label>
+                        </div>
+                        <div class="col-md-9">
+                            <form:input path="unit" type="text" class="form-control-sm" onkeyup="totalSumPurchase();" autocomplete="off" name="unitId" id="unitId"/>
+                        </div>
+                    </div>
+                     <div class="row mb-2">
+                        <div class="col-md-3 pr-0">
+                            <label for="employee-name" class="col-form-label">Rate:</label>
+                        </div>
+                        <div class="col-md-9">
+                            <form:input path="rate" type="text" class="form-control-sm" name="rateId" id="rateId"/>
+                        </div>
+                    </div>
+                     <div class="row mb-2">
+                        <div class="col-md-3 pr-0">
+                            <label for="employee-name" class="col-form-label">Sum:</label>
+                        </div>
+                        <div class="col-md-9">
+                            <form:input path="sum" type="text" class="form-control-sm" name="sumId" id="sumId"/>
+                        </div>
+                    </div>
+                   <form:hidden path="id" id="productUniqueId" name="productUniqueId"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">Close</button>
+                    <button name="commandPass" type="submit" value="submit" class="btn btn-success btn-sm" onclick="document.productDetailsForPurchase.command.value='updatePurchaseProduct'">Submit</button>
+                    <input type="hidden" name="command">
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        
 
     </section>
     <jsp:include page="footer.jsp" />
@@ -109,6 +183,28 @@
                 ]
             })
         });
+        
+        
+        function updateProductPurchase(id,bill,product,unit,rate,sum){
+        	
+   	   	 $("#productUniqueId").val(id);
+       	 $("#billingNumberId").val(bill);
+       	 $("#productId").val(product);
+       	 $("#unitId").val(unit);
+       	 $("#rateId").val(rate);
+       	 $("#sumId").val(sum);
+	     $('#add-new-employee-modal-u').modal('show');
+
+   }
+   
+	 
+	 function totalSumPurchase(){
+		     var totalSum = parseInt($("#unitId").val()) * parseInt($("#rateId").val());
+		     document.getElementById("sumId").value = totalSum;
+	 }
+        
+        
+        
     </script>
 
 </html>

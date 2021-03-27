@@ -36,4 +36,14 @@ public interface BillingDetailsForPurchaseRepository extends JpaRepository<Billi
 	@Query(value = "UPDATE billing_details_for_purchase set paid_amount =:paid_amount,un_paid_amount=:un_paid_amount where billing_number=:billing_number", nativeQuery = true)
 	public void updateProductDetailsForSaleByBillNumber(@Param("paid_amount") String paid_amount,@Param("un_paid_amount") String un_paid_amount,@Param("billing_number") String billing_number);
 
+	@Query(value = "SELECT COALESCE(paid_amount,0) FROM billing_details_for_purchase m where billing_number=:billing_number", nativeQuery = true)
+	int getPaidAmountForPurchase(@Param("billing_number") String billing_number);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE billing_details_for_purchase set bill_amount =:bill_amount,un_paid_amount=:un_paid_amount where billing_number=:billing_number", nativeQuery = true)
+	public void updateBillingDetailsForPurchase(@Param("billing_number") String billing_number,@Param("bill_amount") String bill_amount,@Param("un_paid_amount") int un_paid_amount);
+	
+	
+	
 }

@@ -42,7 +42,7 @@ public class LoginController {
 		if (userData != null) {
 			model.addAttribute("loginPage", login);
 			session.setAttribute("userData", userData);
-			return "redirect:createClient";
+			return "redirect:createNewOrder";
 		}
 		model.addAttribute("loginPage", login);
 		model.addAttribute("error", "UserName or Password Wrong.Please Try Again..");

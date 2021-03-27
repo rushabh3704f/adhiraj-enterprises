@@ -4,7 +4,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.internal.compiler.impl.Constant;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -31,10 +32,12 @@ import com.shope.dev.model.ShopeCreateProductForSale;
 import com.shope.dev.model.TempProductDetailsForPurchase;
 import com.shope.dev.model.TempProductDetailsForSale;
 import com.shope.dev.model.UnitTypeMaster;
+import com.shope.dev.model.UserData;
 import com.shope.dev.repository.BillingDetailsForPurchaseRepository;
 import com.shope.dev.repository.BillingDetailsForSaleRepository;
 import com.shope.dev.repository.PaymentHistoryDetailsPurchaseRepository;
 import com.shope.dev.repository.PaymentHistoryDetailsRepository;
+import com.shope.dev.repository.ProductDetailsForPurchaseRepository;
 import com.shope.dev.repository.ProductDetailsForSaleRepository;
 import com.shope.dev.repository.ShopeCreateEmployeeSalaryRepository;
 import com.shope.dev.repository.UnitTypeMasterRepository;
@@ -72,11 +75,21 @@ public class DigitalShopeController {
 	@Autowired
 	BillingDetailsForPurchaseRepository billingDetailsForPurchaseRepository;
 	
+	@Autowired
+	ProductDetailsForPurchaseRepository productDetailsForPurchaseRepository;
+	
+	@Autowired
+	HttpSession session;
 	
     //===================================================================================================================
 	@RequestMapping("/createNewOrder")
 	public String createNewOrder(Model model, @ModelAttribute("shopeCreateOrderForSale")BillingDetailsForSale billDetailsForSale, BindingResult bindingResult) {
 
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 	    int maxNumber=digitalShopeService.getMaxNumber();
 	    String billNumber= utils.uniqueBillNo(maxNumber);
 	    model.addAttribute("billNumber",billNumber);
@@ -99,7 +112,7 @@ public class DigitalShopeController {
 	    model.addAttribute("shopeCreateOrderForSale",billDetailsForSale);
 	    model.addAttribute("systemDate",utils.getCurrentDate());
 	    model.addAttribute("BASE_URL",Constants.BASE_URL);
-
+	    model.addAttribute("role",data.getRole());
 		return "createNewOrder";
 	}
 	
@@ -107,7 +120,11 @@ public class DigitalShopeController {
 	
 	@PostMapping(value="/createNewOrder", params= {"command=addItemInList"})
 	public String addItemInList(Model model, @ModelAttribute("shopeCreateOrderForSale")BillingDetailsForSale billDetailsForSale,BindingResult bindingResult) {
-		System.out.println("-----");
+
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		digitalShopeService.addItemInList(billDetailsForSale);
 		List<TempProductDetailsForSale> tempProductDetailsForSale=digitalShopeService.getAllProductDetailsByBillingNumber();
 		model.addAttribute("shopeCreateOrderForSaleList",tempProductDetailsForSale);
@@ -118,6 +135,9 @@ public class DigitalShopeController {
 	    List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
 	  	model.addAttribute("productMasterList",productMasterList);
 	    model.addAttribute("systemDate",utils.getCurrentDate());
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
+
 		return "createNewOrder";
 	}
 	
@@ -125,9 +145,13 @@ public class DigitalShopeController {
 	
 	@PostMapping(value="/createNewOrder", params= {"command=generateBill"})
 	public String generateBill(Model model, @ModelAttribute("shopeCreateOrderForSale")BillingDetailsForSale billDetailsForSale,BindingResult bindingResult) {
-		System.out.println("-----");
-		digitalShopeService.generateBill(billDetailsForSale);
 		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
+		digitalShopeService.generateBill(billDetailsForSale);		
 		digitalShopeService.rePaymentHistorySaveDuringBillGeneration(billDetailsForSale);
 		
 		List<TempProductDetailsForSale> tempProductDetailsForSale=digitalShopeService.getAllProductDetailsByBillingNumber();
@@ -139,6 +163,8 @@ public class DigitalShopeController {
 	    String billNumber= utils.uniqueBillNo(maxNumber);
 	    model.addAttribute("billNumber",billNumber);
 	    model.addAttribute("systemDate",utils.getCurrentDate());
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 	    return "redirect:thanks";
 	}
 	
@@ -150,7 +176,12 @@ public class DigitalShopeController {
 	
 	@RequestMapping("/deleteProductById")
 	public String deleteProductById(Model model, @ModelAttribute("shopeCreateOrderForSale")BillingDetailsForSale billDetailsForSale, BindingResult bindingResult) {
-		System.out.println("-----");
+
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		digitalShopeService.deleteSoldProductById(String.valueOf(billDetailsForSale.getId()),billDetailsForSale.getSum());
 		List<ShopeCreateClient> shopeCreateClientList=digitalShopeService.getAllClientList();
 		model.addAttribute("shopeCreateClientList",shopeCreateClientList);
@@ -170,7 +201,8 @@ public class DigitalShopeController {
 	  	model.addAttribute("productMasterList",productMasterList);
 	  	
 		model.addAttribute("shopeCreateOrderForSale",billDetailsForSale);
-
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "createNewOrder";
 	}
 	
@@ -180,16 +212,28 @@ public class DigitalShopeController {
 	
 	@RequestMapping("/createEmployee")
 	public String renderOnEmployeePage(Model model, @ModelAttribute("shopeCreateEmployee")ShopeCreateEmployee shopeCreateEmployee, BindingResult bindingResult) {
-		System.out.println("-----");
+
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		List<ShopeCreateEmployee> shopeCreateEmployeeList=digitalShopeService.getAllEmployeList();
 		model.addAttribute("shopeCreateEmployeeList",shopeCreateEmployeeList);
 		model.addAttribute("shopeCreateEmployee",shopeCreateEmployee);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "employee";
 	}
 	
 	@PostMapping(value="/createEmployee", params= {"command=addEmployee"})
 	public String createEmployee(Model model, @ModelAttribute("shopeCreateEmployee")ShopeCreateEmployee shopeCreateEmployee,BindingResult bindingResult) {
-		System.out.println("-----");
+
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		try {
 			shopeCreateEmployee.setCreatedOn(utils.getCurrentDate());
 			digitalShopeService.createNewEmployee(shopeCreateEmployee);
@@ -204,46 +248,79 @@ public class DigitalShopeController {
 		List<ShopeCreateEmployee> shopeCreateEmployeeList = digitalShopeService.getAllEmployeList();
 		model.addAttribute("shopeCreateEmployeeList", shopeCreateEmployeeList);
 		model.addAttribute("shopeCreateEmployee", shopeCreateEmployee);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "employee";
 	}
 	
 	
 	@RequestMapping("/deleteEmployeeById")
 	public String deleteEmployeeById(Model model, @ModelAttribute("shopeCreateEmployee")ShopeCreateEmployee shopeCreateEmployee,@RequestParam("employeeId") String employeeId, BindingResult bindingResult) {
-		System.out.println("-----");
+
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		digitalShopeService.deleteEmployeeById(employeeId);
 		List<ShopeCreateEmployee> shopeCreateEmployeeList=digitalShopeService.getAllEmployeList();
 		model.addAttribute("shopeCreateEmployeeList",shopeCreateEmployeeList);
 		model.addAttribute("shopeCreateEmployee",shopeCreateEmployee);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "employee";
 	}
 	
 	@RequestMapping("/createClient")
 	public String renderOnCreateClient(Model model, @ModelAttribute("shopeCreateClient")ShopeCreateClient shopeCreateClient,BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		List<ShopeCreateClient> shopeCreateClientList=digitalShopeService.getAllClientList();
 		model.addAttribute("shopeCreateClientList",shopeCreateClientList);
 		model.addAttribute("shopeCreateClient",shopeCreateClient);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "createClient";
 	}
 	
 	
 	@PostMapping(value="/createClient", params= {"command=createClient"})
 	public String createClient(Model model, @ModelAttribute("shopeCreateClient")ShopeCreateClient shopeCreateClient,BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		shopeCreateClient.setCreatedOn(utils.getCurrentDate());
 		digitalShopeService.createNewClient(shopeCreateClient);
 		List<ShopeCreateClient> shopeCreateClientList=digitalShopeService.getAllClientList();
 		model.addAttribute("shopeCreateClientList",shopeCreateClientList);
 		model.addAttribute("shopeCreateClient",shopeCreateClient);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "createClient";
 	}
 	
 	
 	@RequestMapping("/deleteClientById")
 	public String deleteClientById(Model model, @ModelAttribute("shopeCreateClient")ShopeCreateClient shopeCreateClient,@RequestParam("clientId") String clientId, BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		digitalShopeService.deleteClientById(clientId);
 		List<ShopeCreateClient> shopeCreateClientList=digitalShopeService.getAllClientList();
 		model.addAttribute("shopeCreateClientList",shopeCreateClientList);
 		model.addAttribute("shopeCreateClient",shopeCreateClient);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "createClient";
 	}
 	
@@ -251,18 +328,30 @@ public class DigitalShopeController {
 	//========================================================================================================================
 	@RequestMapping("/createEmpSalary")
 	public String rendarOnEmpSalary(Model model, @ModelAttribute("shopeCreateEmployeeSalary")ShopeCreateEmployeeSalary shopeCreateEmployeeSalary, BindingResult bindingResult) {		
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		List<ShopeCreateEmployee> shopeCreateEmployeeList = digitalShopeService.getAllEmployeList();
 		model.addAttribute("shopeCreateEmployeeList", shopeCreateEmployeeList);
 		
 		List<ShopeCreateEmployeeSalary> shopeCreateEmployeeSalaryList=digitalShopeService.getAllSalaryList();
 		model.addAttribute("shopeCreateEmployeeSalaryList",shopeCreateEmployeeSalaryList);
 		model.addAttribute("shopeCreateEmployeeSalary", shopeCreateEmployeeSalary);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "emp-salary";
 	}
 	
 	@PostMapping(value="/createEmpSalary", params= {"command=createSalary"})
 	public String createEmpSalary(Model model, @ModelAttribute("shopeCreateEmployeeSalary")ShopeCreateEmployeeSalary shopeCreateEmployeeSalary,BindingResult bindingResult) throws ParseException {
 		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		shopeCreateEmployeeSalary.setCreatedOn(utils.getCurrentDate());
 		shopeCreateEmployeeSalary.setPaymentDate(utils.getDateInDDMMMYYYY(shopeCreateEmployeeSalary.getPaymentDate().toString()));
 		digitalShopeService.createEmpSalary(shopeCreateEmployeeSalary);
@@ -273,13 +362,20 @@ public class DigitalShopeController {
 		
 		List<ShopeCreateEmployee> shopeCreateEmployeeList = digitalShopeService.getAllEmployeList();
 		model.addAttribute("shopeCreateEmployeeList", shopeCreateEmployeeList);
-		
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "emp-salary";
 	}
 	
 	
 	@RequestMapping("/deleteSalaryById")
 	public String deleteSalaryById(Model model, @ModelAttribute("shopeCreateEmployeeSalary")ShopeCreateEmployeeSalary shopeCreateEmployeeSalary,@RequestParam("clientId") String clientId, BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		digitalShopeService.deleteEmpSalById(clientId);
 		List<ShopeCreateEmployeeSalary> shopeCreateEmployeeSalaryList=digitalShopeService.getAllSalaryList();
 		model.addAttribute("shopeCreateEmployeeSalaryList",shopeCreateEmployeeSalaryList);
@@ -287,7 +383,8 @@ public class DigitalShopeController {
 		
 		List<ShopeCreateEmployee> shopeCreateEmployeeList = digitalShopeService.getAllEmployeList();
 		model.addAttribute("shopeCreateEmployeeList", shopeCreateEmployeeList);
-		
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);	
+	    model.addAttribute("role",data.getRole());
 		return "emp-salary";
 	}
 	
@@ -295,15 +392,29 @@ public class DigitalShopeController {
 	//========================================================================================================================
 	@RequestMapping("/createPurchaseProduct")
 	public String addPurchaseProduct(Model model, @ModelAttribute("shopeCreateProductForPurchase")ShopeCreateProductForPurchase shopeCreateProductForPurchase, BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		List<ShopeCreateProductForPurchase> shopeCreateProductForPurchaseList=digitalShopeService.getCreatedPurchaseProduct();
 		model.addAttribute("shopeCreateProductForPurchaseList",shopeCreateProductForPurchaseList);
 		model.addAttribute("shopeCreateProductForPurchase", shopeCreateProductForPurchase);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "createProductForPurchase";
 	}
 	
 	
 	@PostMapping(value="/createPurchaseProduct", params= {"command=createPurchaseProduct"})
 	public String createPurchaseProduct(Model model, @ModelAttribute("shopeCreateProductForPurchase")ShopeCreateProductForPurchase shopeCreateProductForPurchase,BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		int maxClient=digitalShopeService.getMaxPurchaseProduct();
 		shopeCreateProductForPurchase.setProductId(utils.uniquePurchaesProductId(maxClient));
 		shopeCreateProductForPurchase.setCreatedOn(utils.getCurrentDate());
@@ -312,12 +423,20 @@ public class DigitalShopeController {
 		List<ShopeCreateProductForPurchase> shopeCreateProductForPurchaseList=digitalShopeService.getCreatedPurchaseProduct();
 		model.addAttribute("shopeCreateProductForPurchaseList",shopeCreateProductForPurchaseList);
 		model.addAttribute("shopeCreateProductForPurchase",shopeCreateProductForPurchase);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "createProductForPurchase";
 	}
 	
 	
 	@PostMapping(value="/createPurchaseProduct", params= {"command=updatePurchaseProduct"})
 	public String updatePurchaseProduct(Model model, @ModelAttribute("shopeCreateProductForPurchase")ShopeCreateProductForPurchase shopeCreateProductForPurchase,BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		shopeCreateProductForPurchase.setCreatedOn(utils.getCurrentDate());
 		digitalShopeService.createPurchaseProduct(shopeCreateProductForPurchase);
 		
@@ -325,6 +444,8 @@ public class DigitalShopeController {
 		model.addAttribute("shopeCreateProductForPurchaseList",shopeCreateProductForPurchaseList);
 		
 		model.addAttribute("shopeCreateProductForPurchase",shopeCreateProductForPurchase);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "createProductForPurchase";
 	}
 	
@@ -333,10 +454,18 @@ public class DigitalShopeController {
 	
 	@RequestMapping("/deleteCreatedPurchaseProductById")
 	public String deleteCreatedPurchaseProductById(Model model, @ModelAttribute("shopeCreateProductForPurchase")ShopeCreateProductForPurchase shopeCreateProductForPurchase,@RequestParam("purchaseProductId") String purchaseProductId, BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		digitalShopeService.deleteCreatedPurchaseProductById(purchaseProductId);
 		List<ShopeCreateProductForPurchase> shopeCreateProductForPurchaseList=digitalShopeService.getCreatedPurchaseProduct();
 		model.addAttribute("shopeCreateProductForPurchaseList",shopeCreateProductForPurchaseList);
 		model.addAttribute("shopeCreateProductForPurchase",shopeCreateProductForPurchase);
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
 		return "createProductForPurchase";
 	}
 
@@ -344,15 +473,29 @@ public class DigitalShopeController {
 	//========================================================================================================================
 	@RequestMapping("/createSaleProduct")
 	public String addSaleProduct(Model model, @ModelAttribute("shopeCreateProductForSale")ShopeCreateProductForSale shopeCreateProductForSale, BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		List<ShopeCreateProductForSale> shopeCreateProductForSaleList=digitalShopeService.getCreatedSaleProduct();
 		model.addAttribute("shopeCreateProductForSaleList",shopeCreateProductForSaleList);
 		model.addAttribute("shopeCreateProductForSale", shopeCreateProductForSale);
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
 		return "createProductForSale";
 	}
 	
 	
 	@PostMapping(value="/createSaleProduct", params= {"command=createSaleProduct"})
 	public String createSaleProduct(Model model, @ModelAttribute("shopeCreateProductForSale")ShopeCreateProductForSale shopeCreateProductForSale,BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		int maxClient=digitalShopeService.getMaxProduct();
 		shopeCreateProductForSale.setProductId(utils.uniqueProductId(maxClient));
 		shopeCreateProductForSale.setCreatedOn(utils.getCurrentDate());
@@ -368,6 +511,8 @@ public class DigitalShopeController {
 			return "createProductForSale";
 		}
 		model.addAttribute("shopeCreateProductForSale",shopeCreateProductForSale);
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
 		return "createProductForSale";
 	}
 	
@@ -375,6 +520,12 @@ public class DigitalShopeController {
 	
 	@PostMapping(value="/createSaleProduct", params= {"command=updateSaleProduct"})
 	public String updateSaleProduct(Model model, @ModelAttribute("shopeCreateProductForSale")ShopeCreateProductForSale shopeCreateProductForSale,BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		shopeCreateProductForSale.setCreatedOn(utils.getCurrentDate());
 		digitalShopeService.createProductForSale(shopeCreateProductForSale);
 		
@@ -382,6 +533,8 @@ public class DigitalShopeController {
 		model.addAttribute("shopeCreateProductForSaleList",shopeCreateProductForSaleList);
 		
 		model.addAttribute("shopeCreateProductForSale",shopeCreateProductForSale);
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
 		return "createProductForSale";
 	}
 	
@@ -391,10 +544,18 @@ public class DigitalShopeController {
 	
 	@RequestMapping("/deleteCreatedSaleProductById")
 	public String deleteSaleProductById(Model model, @ModelAttribute("shopeCreateProductForPurchase")ShopeCreateProductForPurchase shopeCreateProductForSale,@RequestParam("saleProductId") String saleProductId, BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		digitalShopeService.deleteCreatedSaleProductById(saleProductId);
 		List<ShopeCreateProductForSale> shopeCreateProductForSaleList=digitalShopeService.getCreatedSaleProduct();
 		model.addAttribute("shopeCreateProductForSaleList",shopeCreateProductForSaleList);
 		model.addAttribute("shopeCreateProductForSale",shopeCreateProductForSale);
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
 		return "createProductForSale";
 	}
 	
@@ -403,7 +564,12 @@ public class DigitalShopeController {
 	@RequestMapping("/createNewPurchaseOrder")
 	public String createNewPurchaseOrder(Model model, @ModelAttribute("shopeCreateOrderForPurchase")BillingDetailsForPurchase billingDetailsForPurchase, BindingResult bindingResult) {
 
-	    int maxNumber=digitalShopeService.getMaxNumberFormPurchase();
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
+		int maxNumber=digitalShopeService.getMaxNumberFormPurchase();
 	    String billNumber= utils.uniqueBillNo(maxNumber);
 	    model.addAttribute("billNumber",billNumber);
 	    
@@ -424,6 +590,8 @@ public class DigitalShopeController {
 		
 	    model.addAttribute("shopeCreateOrderForSale",billingDetailsForPurchase);
 	    model.addAttribute("systemDate",utils.getCurrentDate());
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "createNewPurchaseOrder";
 	}
 	
@@ -432,8 +600,12 @@ public class DigitalShopeController {
 	@PostMapping(value="/createNewPurchaseOrder", params= {"command=addItemInPurchase"})
 	public String addItemInList(Model model, @ModelAttribute("shopeCreateOrderForPurchase")BillingDetailsForPurchase billingDetailsForPurchase,BindingResult bindingResult) {
 
-		digitalShopeService.addItemInList(billingDetailsForPurchase);
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		
+		digitalShopeService.addItemInList(billingDetailsForPurchase);
 		List<TempProductDetailsForPurchase> tempProductDetailsForPurchase=digitalShopeService.getAllPurchaseProductDetailsByBillingNumber();
 		model.addAttribute("tempProductDetailsForPurchase",tempProductDetailsForPurchase);
 		
@@ -447,6 +619,8 @@ public class DigitalShopeController {
 	  	model.addAttribute("productMasterList",shopeCreateProductForPurchase);
 	  	
 	    model.addAttribute("systemDate",utils.getCurrentDate());
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "createNewPurchaseOrder";
 	}
 	
@@ -455,10 +629,13 @@ public class DigitalShopeController {
 	@PostMapping(value="/createNewPurchaseOrder", params= {"command=genPurchaseBill"})
 	public String generateBill(Model model, @ModelAttribute("shopeCreateOrderForPurchase")BillingDetailsForPurchase billingDetailsForPurchase,BindingResult bindingResult) {
 
-		digitalShopeService.generateBillForPurchase(billingDetailsForPurchase);
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		
+		digitalShopeService.generateBillForPurchase(billingDetailsForPurchase);
 		digitalShopeService.rePaymentPurchaseHistorySaveDuringBillGeneration(billingDetailsForPurchase);
-
 		
 		List<TempProductDetailsForPurchase> tempProductDetailsForPurchase=digitalShopeService.getAllPurchaseProductDetailsByBillingNumber();
 		digitalShopeService.placeFinalPurchaseOrder(tempProductDetailsForPurchase);
@@ -472,13 +649,27 @@ public class DigitalShopeController {
 	    String billNumber= utils.uniqueBillNo(maxNumber);
 	    model.addAttribute("billNumber",billNumber);
 	    model.addAttribute("systemDate",utils.getCurrentDate());
-	    return "redirect:thanks";
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
+	    return "redirect:thanksPurchase";
 	}
+	
+	
+	  @RequestMapping(value = "/thanksPurchase", method = RequestMethod.GET)
+	   public String thanksPurchase() {
+	      return "thanksPurchase";
+	   }
+	
 	
 	
 	@RequestMapping("/deletePurchaseProductById")
 	public String deletePurchaseProductById(Model model, @ModelAttribute("shopeCreateOrderForPurchase")BillingDetailsForPurchase billingDetailsForPurchase, BindingResult bindingResult) {
 
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		digitalShopeService.deleteSoldPurchaseProductById(String.valueOf(billingDetailsForPurchase.getId()));
 		List<ShopeCreateClient> shopeCreateClientList=digitalShopeService.getAllClientList();
 		model.addAttribute("shopeCreateClientList",shopeCreateClientList);
@@ -499,7 +690,8 @@ public class DigitalShopeController {
 	  	model.addAttribute("productMasterList",shopeCreateProductForPurchase);
 	  	
 		model.addAttribute("shopeCreateOrderForPurchase",billingDetailsForPurchase);
-
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
 		return "createNewPurchaseOrder";
 	}
 	
@@ -508,6 +700,11 @@ public class DigitalShopeController {
 	@RequestMapping("/purchaseOrderList")
 	public String getPurchaseOrderList(Model model,@ModelAttribute("productDetailsForPurchase")ProductDetailsForPurchase productDetailsForPurchase) {
 
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		List<BillingDetailsForPurchase>billingDetailsForPurchaseList = digitalShopeService.getAllBillingDetailsForPurchaseList();		
 	    List<ShopeCreateProductForPurchase>productMasterList = digitalShopeService.getCreatedPurchaseProduct();    
 		List<BillingDetailsForPurchase>billingDetailsForPurchaseListWithProductName =new ArrayList<>();
@@ -524,21 +721,25 @@ public class DigitalShopeController {
 		
 	    model.addAttribute("productDetailsForPurchase",productDetailsForPurchase);
 	    model.addAttribute("billingDetailsForPurchaseList",billingDetailsForPurchaseListWithProductName);
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "purchaseOrderList";
 	}
 	
 	
 	@RequestMapping("/purchaseOrderListByBillNumber")
-	public String purchaseOrderListByBillNumber(Model model,@RequestParam("billNumber")String billNumber) {
+	public String purchaseOrderListByBillNumber(Model model,@ModelAttribute("productDetailsForPurchase")ProductDetailsForPurchase productDetailsForPurchase1, @RequestParam("billNumber")String billNumber) {
 
-		List<ProductDetailsForPurchase>productDetailsForPurchaseList = digitalShopeService.getAllProductDetailsForPurchaseList(billNumber);
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		
+		List<ProductDetailsForPurchase>productDetailsForPurchaseList = digitalShopeService.getAllProductDetailsForPurchaseList(billNumber);
 	    List<ShopeCreateProductForPurchase>productMasterList = digitalShopeService.getCreatedPurchaseProduct();   
-	    
 		List<ProductDetailsForPurchase>billingDetailsForPurchaseListWithProductName =new ArrayList<>();
 			
 		for (ShopeCreateProductForPurchase shopeCreateProductForPurchase : productMasterList) {
-			
 			for (ProductDetailsForPurchase productDetailsForPurchase : productDetailsForPurchaseList) {
 				if (productDetailsForPurchase.getProductId().equals(shopeCreateProductForPurchase.getProductId())) {
 					productDetailsForPurchase.setProductName(shopeCreateProductForPurchase.getProductName());
@@ -547,6 +748,9 @@ public class DigitalShopeController {
 			}
 		}
 		model.addAttribute("productDetailsForPurchaseList",billingDetailsForPurchaseListWithProductName);
+		model.addAttribute("productDetailsForPurchase",productDetailsForPurchase1);
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
 		return "purchaseOrderListByBillNumber";
 	}
 	
@@ -555,15 +759,16 @@ public class DigitalShopeController {
 	@RequestMapping("/saleOrderListByBillNumber")
 	public String saleOrderListByBillNumber(Model model,@ModelAttribute("productDetailsForSale")ProductDetailsForSale productDetailsForSale1,@RequestParam("billNumber")String billNumber) {
 
-		List<ProductDetailsForSale>productDetailsForSaleList = digitalShopeService.getAllProductDetailsForSaleList(billNumber);
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		
+		List<ProductDetailsForSale>productDetailsForSaleList = digitalShopeService.getAllProductDetailsForSaleList(billNumber);
 		List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
-	    
 		List<ProductDetailsForSale>productDetailsForSaleListWithProductName =new ArrayList<>();
 		
-		
 		for (ProductDetailsForSale productDetailsForSale : productDetailsForSaleList) {
-			
 			for (ShopeCreateProductForSale shopeCreateProductForSale : productMasterList) {
 				if (shopeCreateProductForSale.getProductId().equals(productDetailsForSale.getProductId())) {
 					productDetailsForSale.setProductName(shopeCreateProductForSale.getProductName());
@@ -574,7 +779,8 @@ public class DigitalShopeController {
 		
 		model.addAttribute("productDetailsForSaleList",productDetailsForSaleListWithProductName);
 		model.addAttribute("productDetailsForSale",productDetailsForSale1);
-		
+		model.addAttribute("BASE_URL",Constants.BASE_URL);	
+		model.addAttribute("role",data.getRole());
 		return "saleOrderListByBillNumber";
 	}
 	
@@ -583,12 +789,14 @@ public class DigitalShopeController {
 	@RequestMapping("/orderList")
 	public String orderList(Model model,@ModelAttribute("productDetailsForSale")ProductDetailsForSale productDetailsForSale) {
 
-		List<BillingDetailsForSale>billingDetailsForSaleList = digitalShopeService.getAllBillingDetailsForSaleList();
-	    
-		List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
-	    
-		List<BillingDetailsForSale>billingDetailsForSaleListWithProductName =new ArrayList<>();
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		
+		List<BillingDetailsForSale>billingDetailsForSaleList = digitalShopeService.getAllBillingDetailsForSaleList();
+		List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
+		List<BillingDetailsForSale>billingDetailsForSaleListWithProductName =new ArrayList<>();	
 		
 		for (ShopeCreateProductForSale shopeCreateProductForSale : productMasterList) {
 			
@@ -601,6 +809,8 @@ public class DigitalShopeController {
 		}
 		model.addAttribute("productDetailsForSale",productDetailsForSale);		
 		model.addAttribute("billingDetailsForSaleList",billingDetailsForSaleListWithProductName);
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
 		return "saleOrderList";
 	}
 
@@ -672,6 +882,11 @@ public class DigitalShopeController {
 	@RequestMapping("/invoiceDetails")
 	public String invoiceDetails(Model model, @RequestParam("billNumber") String billNumber) {
 
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		List<ProductDetailsForSale>productDetailsForSaleList = digitalShopeService.getAllProductDetailsForSaleList(billNumber);		
 		List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();    
 		List<ProductDetailsForSale>productDetailsForSaleListWithProductName =new ArrayList<>();	
@@ -693,9 +908,10 @@ public class DigitalShopeController {
 	    model.addAttribute("phoneNumber",shopeCreateClient.getPhoneNumber());
 	    model.addAttribute("orderPlaceDate",shopeCreateClient.getCreatedOn());
 
-
 		model.addAttribute("productDetailsForSaleList",productDetailsForSaleListWithProductName);	
 	    model.addAttribute("systemDate",utils.getCurrentDate());
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "invoiceDetails";
 	}
 
@@ -703,7 +919,11 @@ public class DigitalShopeController {
 	
 	@RequestMapping("/invoiceDetailsPurchase")
 	public String invoiceDetailsPurchase(Model model, @RequestParam("billNumber") String billNumber) {
-
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
 		List<ProductDetailsForPurchase>productDetailsForPurchaseList = digitalShopeService.getAllProductDetailsForPurchaseList(billNumber);
 		List<ShopeCreateProductForPurchase>productMasterList = digitalShopeService.getCreatedPurchaseProduct();
 		List<ProductDetailsForPurchase>productDetailsForPurchaseListWithProductName =new ArrayList<>();
@@ -728,6 +948,8 @@ public class DigitalShopeController {
 		
 		model.addAttribute("productDetailsForPurchaseList",productDetailsForPurchaseListWithProductName);	
 	    model.addAttribute("systemDate",utils.getCurrentDate());
+	    model.addAttribute("BASE_URL",Constants.BASE_URL);
+	    model.addAttribute("role",data.getRole());
 		return "invoiceDetailsPurchase";
 	}
 	
@@ -742,6 +964,11 @@ public class DigitalShopeController {
 	
 	@RequestMapping("/deleteProductDetailsForSale")
 	public String deleteProductDetailsForSale(Model model,@ModelAttribute("productDetailsForSale")ProductDetailsForSale productDetailsForSale1, @RequestParam("productId") String productId,@RequestParam("billNumber") String billingNumber) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		
 		productDetailsForSaleRepository.deleteProductDetailsForSaleById(productId);
 		List<ProductDetailsForSale>productDetailsForSaleList = digitalShopeService.getAllProductDetailsForSaleList(billingNumber);
@@ -758,12 +985,48 @@ public class DigitalShopeController {
 		}
 		model.addAttribute("productDetailsForSaleList",productDetailsForSaleListWithProductName);
 		model.addAttribute("productDetailsForSale",productDetailsForSale1);
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
 		return "saleOrderListByBillNumber";
 	}
+	
+	@RequestMapping("/deleteProductDetailsForPurchase")
+	public String deleteProductDetailsForPurchase(Model model,@ModelAttribute("productDetailsForPurchase")ProductDetailsForPurchase productDetailsForPurchase1, @RequestParam("productId") String productId,@RequestParam("billNumber") String billingNumber) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
+		productDetailsForPurchaseRepository.deleteProductDetailsForPurchaseById(productId);
+		List<ProductDetailsForPurchase>productDetailsForPurchaseList = digitalShopeService.getAllProductDetailsForPurchaseList(billingNumber);
+		List<ShopeCreateProductForPurchase>productMasterList = digitalShopeService.getCreatedPurchaseProduct();
+		List<ProductDetailsForPurchase>productDetailsForPurchaseListWithProductName =new ArrayList<>();
+		
+		for (ProductDetailsForPurchase productDetailsForPurchase : productDetailsForPurchaseList) {
+			for (ShopeCreateProductForPurchase shopeCreateProductForPurchase : productMasterList) {
+				if (shopeCreateProductForPurchase.getProductId().equals(productDetailsForPurchase.getProductId())) {
+					productDetailsForPurchase.setProductName(shopeCreateProductForPurchase.getProductName());
+					productDetailsForPurchaseListWithProductName.add(productDetailsForPurchase);
+				}
+			}
+		}
+		model.addAttribute("productDetailsForPurchaseList",productDetailsForPurchaseListWithProductName);
+		model.addAttribute("productDetailsForPurchase",productDetailsForPurchase1);
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
+		return "purchaseOrderListByBillNumber";
+	}
+	
 	
 	
 	@PostMapping(value="/updateProductForSale", params= {"command=updateProduct"})
 	public String updateOrderForSale(Model model, @ModelAttribute("productDetailsForSale")ProductDetailsForSale productDetailsForSale,BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		
 		productDetailsForSaleRepository.updateProductDetailsForSaleById(productDetailsForSale.getUnit(),productDetailsForSale.getSum(),productDetailsForSale.getId());
 		int paidAmount=billingDetailsForSaleRepository.getPaidAmountForSale(productDetailsForSale.getBillingNumber());
@@ -772,9 +1035,7 @@ public class DigitalShopeController {
 
 		
 		List<ProductDetailsForSale>productDetailsForSaleList = digitalShopeService.getAllProductDetailsForSaleList(productDetailsForSale.getBillingNumber());
-		
-		List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
-	    
+		List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();	    
 		List<ProductDetailsForSale>productDetailsForSaleListWithProductName =new ArrayList<>();
 		
 		for (ProductDetailsForSale productDetailsForSale1 : productDetailsForSaleList) {
@@ -788,38 +1049,85 @@ public class DigitalShopeController {
 		}
 		model.addAttribute("productDetailsForSaleList",productDetailsForSaleListWithProductName);
 		model.addAttribute("productDetailsForSale",productDetailsForSale);
-		
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
 		return "saleOrderListByBillNumber";
+	}
+	
+	
+	//updatePurchaseProduct
+	@PostMapping(value="/productDetailsForPurchase", params= {"command=updatePurchaseProduct"})
+	public String updatePurchaseProduct(Model model, @ModelAttribute("productDetailsForPurchase")ProductDetailsForPurchase productDetailsForPurchase,BindingResult bindingResult) {
+		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
+		
+		productDetailsForPurchaseRepository.updateProductDetailsForPurchaseById(productDetailsForPurchase.getUnit(),productDetailsForPurchase.getSum(),productDetailsForPurchase.getId());
+		int paidAmount=billingDetailsForPurchaseRepository.getPaidAmountForPurchase(productDetailsForPurchase.getBillingNumber());
+		int unPaidAmount=Integer.valueOf(productDetailsForPurchase.getSum())-paidAmount;
+		billingDetailsForPurchaseRepository.updateBillingDetailsForPurchase(productDetailsForPurchase.getBillingNumber(),productDetailsForPurchase.getSum(),unPaidAmount);
+
+		
+		List<ProductDetailsForPurchase>productDetailsForPurchaseList = digitalShopeService.getAllProductDetailsForPurchaseList(productDetailsForPurchase.getBillingNumber());
+		List<ShopeCreateProductForPurchase>productMasterList = digitalShopeService.getCreatedPurchaseProduct();	    
+		List<ProductDetailsForPurchase>productDetailsForPurchaseListWithProductName =new ArrayList<>();
+		
+		for (ProductDetailsForPurchase productDetailsForPurchase1 : productDetailsForPurchaseList) {
+			
+			for (ShopeCreateProductForPurchase shopeCreateProductForPurchase : productMasterList) {
+				if (shopeCreateProductForPurchase.getProductId().equals(productDetailsForPurchase1.getProductId())) {
+					productDetailsForPurchase1.setProductName(shopeCreateProductForPurchase.getProductName());
+					productDetailsForPurchaseListWithProductName.add(productDetailsForPurchase1);
+				}
+			}
+		}
+		model.addAttribute("productDetailsForPurchaseList",productDetailsForPurchaseListWithProductName);
+		model.addAttribute("productDetailsForPurchase",productDetailsForPurchase);
+		model.addAttribute("BASE_URL",Constants.BASE_URL);
+		model.addAttribute("role",data.getRole());
+		return "PurchaseOrderListByBillNumber";
 	}
 	
 	
 	@PostMapping(value="/updateProductForSale", params= {"command=rePay"})
 	public String rePay(Model model, @ModelAttribute("productDetailsForSale")ProductDetailsForSale productDetailsForSale,BindingResult bindingResult) {
 		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		digitalShopeService.rePaymentHistorySave(productDetailsForSale);
 		billingDetailsForSaleRepository.updateProductDetailsForSaleByBillNumber(productDetailsForSale.getPaidAmount(),productDetailsForSale.getUnPaidAmount(),productDetailsForSale.getBillingNumber());
+		model.addAttribute("role",data.getRole());
 		return "redirect:orderList";
 	}
-	
-	
 	
 	
 	@RequestMapping(value="/paymentHistoryDetails")
 	public String paymentHistoryDetails(Model model, @ModelAttribute("productDetailsForSale")ProductDetailsForSale productDetailsForSale,@RequestParam("billingNumber") String billingNumber, BindingResult bindingResult) {
 		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		List<PaymentHistoryDetails> paymentHistoryDetailsList= paymentHistoryDetailsRepository.getPaymentHistoryByBill(billingNumber);
 		model.addAttribute("paymentHistoryDetailsList",paymentHistoryDetailsList);
+		model.addAttribute("role",data.getRole());
 		return "paymentHistoryDetails";
 	}
 	
 	
-	
-	
 	@RequestMapping(value="/paymentHistoryDetailsPurchase")
 	public String paymentHistoryDetailsPurchase(Model model, @ModelAttribute("productDetailsForPurchase")ProductDetailsForPurchase productDetailsForPurchase,@RequestParam("billingNumber") String billingNumber, BindingResult bindingResult) {
-		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		List<PaymentHistoryDetailsPurchase> paymentHistoryDetailsList= paymentHistoryDetailsPurchaseRepository.getPaymentHistoryByBill(billingNumber);
 		model.addAttribute("paymentHistoryDetailsList",paymentHistoryDetailsList);
+		model.addAttribute("role",data.getRole());
 		return "paymentHistoryDetailsPurchase";
 	}
 	
@@ -827,8 +1135,13 @@ public class DigitalShopeController {
 	@PostMapping(value="/updateProductForPurchase", params= {"command=rePayPurchase"})
 	public String rePayPurchase(Model model, @ModelAttribute("productDetailsForPurchase")ProductDetailsForPurchase productDetailsForPurchase,BindingResult bindingResult) {
 		
+		UserData data = (UserData) session.getAttribute("userData");
+		if(data==null) {
+			return "redirect:loginPage";
+		}
 		digitalShopeService.rePaymentHistorySavePurchase(productDetailsForPurchase);
 		billingDetailsForPurchaseRepository.updateProductDetailsForSaleByBillNumber(productDetailsForPurchase.getPaidAmount(),productDetailsForPurchase.getUnPaidAmount(),productDetailsForPurchase.getBillingNumber());
+		model.addAttribute("role",data.getRole());
 		return "redirect:purchaseOrderList";
 	}
 	

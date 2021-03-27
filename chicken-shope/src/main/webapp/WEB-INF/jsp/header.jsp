@@ -13,7 +13,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light maizil-nav shadow-sm border-position">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                Alam Enterprises
+                ${role}
             </a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

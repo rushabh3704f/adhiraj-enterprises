@@ -41,7 +41,7 @@
                     <div class="p-5 maizil-invoice bg-white shadow-sm">
                         <div class="row mb-1 pb-3 ">
                             <div class="col-md-8 col-10">
-                                <h3> Alam Enterprises</h3>
+                                <h3>${role}</h3>
                             </div>
                             <div class="col-md-4 col-2 pl-0 text-right">
                                 <p class="mb-4 mt-2">

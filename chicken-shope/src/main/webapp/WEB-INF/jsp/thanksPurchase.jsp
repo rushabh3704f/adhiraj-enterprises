@@ -39,7 +39,7 @@
                     <img class="img-fluid mb-5" src="img/thanks.png" alt="404">
                     <h1 class="mt-2 mb-2 text-success">Congratulations!</h1>
                     <p class="mb-5">You have successfully placed your order</p>
-                    <a class="btn btn-primary btn-lg" href="/orderList">View Order :)</a>
+                    <a class="btn btn-primary btn-lg" href="/purchaseOrderList">View Order :)</a>
                 </div>
             </div>
         </div>

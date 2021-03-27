@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-md-6 col-6">
                     <div class="add-new-client float-right mt-3">
-                        <a href="purchase-order.html" class="btn btn-success btn-sm">New Order</a>
+                        <a href="/createNewPurchaseOrder" class="btn btn-success btn-sm">New Order</a>
                     </div>
                 </div>
             </div>
