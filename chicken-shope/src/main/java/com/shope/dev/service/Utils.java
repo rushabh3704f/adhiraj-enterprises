@@ -16,7 +16,7 @@ public class Utils {
 		Date d = new Date();
 		int year = d.getYear();
 		year = year - 100;
-		String slNumber = "ALAM" + String.format("%04d", approveCount);
+		String slNumber = "CHKN" + String.format("%04d", approveCount);
 		System.out.println("Unique Number " + slNumber);
 		return slNumber;
 	}

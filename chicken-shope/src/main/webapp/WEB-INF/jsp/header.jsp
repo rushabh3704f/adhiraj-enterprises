@@ -12,7 +12,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light maizil-nav shadow-sm border-position">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="#">
                 ${role}
             </a>
             
@@ -70,7 +70,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="icofont-live-support"></i> Alam Enterprises
+                            <i class="icofont-live-support"></i>${role}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow-sm border-0 mt-2">
                             <a class="dropdown-item" href="${contextPath}/loginPage"> Log Out</a>

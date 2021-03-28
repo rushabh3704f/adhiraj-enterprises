@@ -1087,7 +1087,7 @@ public class DigitalShopeController {
 		model.addAttribute("productDetailsForPurchase",productDetailsForPurchase);
 		model.addAttribute("BASE_URL",Constants.BASE_URL);
 		model.addAttribute("role",data.getRole());
-		return "PurchaseOrderListByBillNumber";
+		return "purchaseOrderListByBillNumber";
 	}
 	
 	

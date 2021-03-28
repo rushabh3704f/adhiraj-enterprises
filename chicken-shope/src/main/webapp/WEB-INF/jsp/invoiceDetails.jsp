@@ -115,8 +115,8 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <div class="company-detail">
-                                    <div class="company-name">Alam Enterprises</div>
-                                    <div class="company-name1"> Chicken And Mutton Suppliers</div>
+                                    <div class="company-name">${role}</div>
+                                    <div class="company-name1">Chicken And Mutton Suppliers</div>
                                     <div class="company-heading"> <strong>Phone:</strong> 9898989898 / 7070707070 / 9090909090</div>
                                     <div class="company-heading"> <strong>Fssai:</strong> 000888000999</div>
                                     <div class="company-heading"> <strong>Address:</strong> Shop No.00, Road No.13, Baiganwadi Govandi Mumbai 400043 </div>

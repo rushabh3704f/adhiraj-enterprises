@@ -59,12 +59,11 @@
                                 </p>
                             </div>
                             <div class="col-md-4">
-                                <p class="mb-1 text-black">Order No: <strong>${productDetailsForSaleList[0].billingNumber}</strong></p>
+                                <p class="mb-1 text-black">Order No: <strong>${productDetailsForPurchaseList[0].billingNumber}</strong></p>
                                 <p class="mb-1">Order placed at: <strong>${orderPlaceDate}</strong></p>
                                 <p class="mb-1">
                                     <strong>Phone:</strong> ${phoneNumber}
                                 </p>
-                                <!-- <p class="mb-1">Order Status: <strong class="text-success">Paid</strong></p> -->
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -115,7 +114,7 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <div class="company-detail">
-                                    <div class="company-name">Alam Enterprises</div>
+                                    <div class="company-name">${role}</div>
                                     <div class="company-name1"> Chicken And Mutton Suppliers</div>
                                     <div class="company-heading"> <strong>Phone:</strong> 9898989898 / 7070707070 / 9090909090</div>
                                     <div class="company-heading"> <strong>Fssai:</strong> 000888000999</div>
