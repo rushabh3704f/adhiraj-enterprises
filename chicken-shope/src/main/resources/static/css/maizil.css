@@ -532,15 +532,15 @@ small {
 
 .btn-primary,
 .badge-danger {
-    background-color: #b5d334 !important;
-    border-color: #b5d334 !important;
-    color: black !important;
+    background-color: #46c468 !important;
+    border-color: #46c468 !important;
+    /* color: black !important; */
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-    background-color: #b5d334db !important;
-    border-color: #b5d334db !important;
+    background-color: #46c468 !important;
+    border-color: #46c468 !important;
 }
 
 .btn-outline-primary {

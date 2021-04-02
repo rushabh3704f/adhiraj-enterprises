@@ -118,7 +118,7 @@
                             <label for="employee-name" class="col-form-label">Employee Id:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="employeeId" type="text" class="form-control-sm" name="employeeId" id="employeeId"/>
+                            <form:input path="employeeId" type="text" class="form-control-sm auto-val" name="employeeId" id="employeeId"/>
                         </div>
                     </div>
                 

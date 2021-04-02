@@ -224,3 +224,15 @@ $(document).keydown(function(e){
 });
 
 })(jQuery); // End of use strict
+
+
+// Editable False Code 
+$(document).ready(function(){
+    //alert("This is alert Function");
+    $(".auto-val").focus(function () {$(this).blur();});
+    $(".auto-val").css("background-color", "#e9e9e9", "cursor", "not-allowed" );
+    $(".auto-val").css("cursor", "not-allowed" );
+    
+}); 
+// END Editable False Code
+

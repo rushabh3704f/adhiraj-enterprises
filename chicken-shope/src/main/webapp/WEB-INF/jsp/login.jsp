@@ -57,14 +57,11 @@
                                         <form:input path="password" type="password" id="passwordId" class="form-control" placeholder="Password"/>
                                         <label for="passwordId">Password</label>
                                     </div>
-
-	                                <div class="modal-footer">
-					                    <button name="commandPass" type="submit" value="submit" class="btn btn-lg btn-outline-primary btn-block btn-login text-uppercase font-weight-bold mb-2" onclick="document.loginPage.command.value='loginCreate'" >Sign In</button>
-					                    <input type="hidden" name="command">
-
-					                </div>
+									
+									<button name="commandPass" type="submit" value="submit" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mt-5" onclick="document.loginPage.command.value='loginCreate'" >Sign In</button>
+					                <input type="hidden" name="command">
+	                                
                                 </form>
-                                <hr class="my-4">
 
                             </div>
                         </div>

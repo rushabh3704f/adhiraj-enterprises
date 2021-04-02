@@ -117,7 +117,7 @@
                             <label for="client-name" class="col-form-label">Client Id:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="clientId" type="text" class="form-control-sm" name="newClientId" id="newClientId"/>
+                            <form:input path="clientId" type="text" class="form-control-sm auto-val" name="newClientId" id="newClientId"/>
                         </div>
                     </div>
                 
