@@ -66,7 +66,7 @@
                             <div class="form-group row">
                                 <label for="contact" class="col-sm-3 col-form-label">Phone:</label>
                                 <div class="col-sm-9">
-                                    <form:input path="phoneNumber" autocomplete="off" type="text" class=" form-control-sm" name="phoneNumberId" id="phoneNumberId"/>
+                                    <form:input path="phoneNumber" autocomplete="off" type="text" class=" form-control-sm auto-val" name="phoneNumberId" id="phoneNumberId"/>
                                      <span id="phoneNumberError" style="color:red"></span>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                             <div class="form-group row">
                                 <label for="client-address" class="col-sm-2 col-form-label">Address:</label>
                                 <div class="col-sm-10">
-                                    <form:input path="address" autocomplete="off" type="text" class=" form-control-sm" name="contact" id="clientAddressId"/>
+                                    <form:input path="address" autocomplete="off" type="text" class=" form-control-sm auto-val" name="contact" id="clientAddressId"/>
                                     <span id="addressError" style="color:red"></span>
                                 
                                 </div>
@@ -101,7 +101,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <form:input path="clientName" type="text" class="billing-name-txt form-control-sm" name="clientNameId" id="clientNameId"/>
+                                            <form:input path="clientName" type="text" class="billing-name-txt form-control-sm auto-val" name="clientNameId" id="clientNameId"/>
                                             <span id="clientNameError" style="color:red"></span>
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@
                  <div class="col-md-2 mt-2">
                     <div class="form-group">
                         <label for="product-unit">Unit Type</label>
-                        <form:input path="perKgOrPice" type="text" autocomplete="off" class=" form-control form-control-sm " id="perKgOrPiceId"  name="perKgOrPice" placeholder="Per Kg Or Pice"/>
+                        <form:input path="perKgOrPice" type="text" autocomplete="off" class=" form-control form-control-sm auto-val " id="perKgOrPiceId"  name="perKgOrPice" placeholder="Per Kg Or Pice"/>
                     </div>
                 </div>
                 
@@ -163,7 +163,7 @@
                   <div class="col-md-2 mt-2">
                     <div class="form-group">
                         <label for="product-rate">Total</label>
-                        <form:input path="sum" type="text" autocomplete="off" class=" form-control form-control-sm " id="sumId" name="product-rate" placeholder="Total Product Rate"/>
+                        <form:input path="sum" type="text" autocomplete="off" class=" form-control form-control-sm auto-val" id="sumId" name="product-rate" placeholder="Total Product Rate"/>
                     </div>
                 </div>
                 
@@ -219,7 +219,7 @@
                     <div class="form-group row ">
                         <label for="bill-amount " class="col-sm-6 col-form-label "><strong>Bill Amount:</strong></label>
                         <div class="col-sm-6 ">
-                            <form:input path="billAmount" type="text " class="form-control-sm " name="billAmountId" value="${billAmount}" id="billAmountId"/>
+                            <form:input path="billAmount" type="text " class="form-control-sm auto-val" name="billAmountId" value="${billAmount}" id="billAmountId"/>
                         </div>
                     </div>
                     <div class="form-group row ">
@@ -232,7 +232,7 @@
                     <div class="form-group row ">
                         <label for="bill-amount " class="col-sm-6 col-form-label "><strong>Unpaid Amount:</strong></label>
                         <div class="col-sm-6 ">
-                            <form:input path="unPaidAmount" type="text " class="form-control-sm "    name="unPaidAmountId" value="" id="unPaidAmountId"/>
+                            <form:input path="unPaidAmount" type="text " class="form-control-sm auto-val" name="unPaidAmountId" value="" id="unPaidAmountId"/>
                         </div>
                     </div>
                      <button name="commandPass" type="submit" value="submit" class="btn btn-success btn-sm" 

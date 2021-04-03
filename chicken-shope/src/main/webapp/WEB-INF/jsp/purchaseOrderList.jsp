@@ -83,9 +83,9 @@
 								<td>${billingDetailsForPurchaseList.createdOn}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="/purchaseOrderListByBillNumber?billNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">View</button></a>
-                                        &nbsp;<a href="/invoiceDetailsPurchase?billNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">Invoice</button></a>
-                                        &nbsp;<a href="/paymentHistoryDetailsPurchase?billingNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-danger btn-sm">Payment History</button></a>
+                                        <a href="/purchaseOrderListByBillNumber?billNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-outline-dark btn-sm">View</button></a>
+                                        &nbsp;<a href="/invoiceDetailsPurchase?billNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-primary btn-sm">Invoice</button></a>
+                                        &nbsp;<a href="/paymentHistoryDetailsPurchase?billingNumber=${billingDetailsForPurchaseList.billingNumber}"><button type="button" class="btn btn-info btn-sm">Payment History</button></a>
                                         &nbsp;<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add-new-employee-modal" onclick="rePayment('${billingDetailsForPurchaseList.billingNumber}','${billingDetailsForPurchaseList.billAmount}','${billingDetailsForPurchaseList.paidAmount}','${billingDetailsForPurchaseList.unPaidAmount}');">Re-Pay</button>                                    
                                    
                                     </div>
@@ -113,7 +113,7 @@
                             <label for="employee-name" class="col-form-label">Bill Number:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="billingNumber" type="text" class="form-control-sm" name="billingNumber" id="billingNumberId"/>
+                            <form:input path="billingNumber" type="text" class="form-control-sm auto-val" name="billingNumber" id="billingNumberId"/>
                         </div>
                     </div>
                     
@@ -122,7 +122,7 @@
                             <label for="employee-name" class="col-form-label">Bill Amount:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="sum" type="text" class="form-control-sm" name="sumId" id="sumId"/>
+                            <form:input path="sum" type="text" class="form-control-sm auto-val" name="sumId" id="sumId"/>
                         </div>
                     </div>
                     
@@ -131,7 +131,7 @@
                             <label for="employee-name" class="col-form-label">Paid Amount:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="paidAmount" type="text" class="form-control-sm" name="paidAmount" id="paidAmountId"/>
+                            <form:input path="paidAmount" type="text" class="form-control-sm auto-val" name="paidAmount" id="paidAmountId"/>
                         </div>
                     </div>
                     
@@ -140,7 +140,7 @@
                             <label for="employee-name" class="col-form-label">Un Paid Amt:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="unPaidAmount" type="text" class="form-control-sm" name="unPaidAmountId" id="unPaidAmountId"/>
+                            <form:input path="unPaidAmount" type="text" class="form-control-sm auto-val" name="unPaidAmountId" id="unPaidAmountId"/>
                         </div>
                     </div>
                     

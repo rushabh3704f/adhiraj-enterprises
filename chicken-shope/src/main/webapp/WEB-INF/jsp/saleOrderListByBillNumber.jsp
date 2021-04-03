@@ -86,7 +86,11 @@
                                 </td>
                             </tr>
                             </c:forEach>
+                         </tbody>
                     </table>
+                </div>
+                <div class=" col-md-12 mb-3 text-center">
+                	<button class="btn btn-info"><i class="fas fa-arrow-left"></i> Go Back</button>
                 </div>
             </div>
         </div>
@@ -109,7 +113,7 @@
                             <label for="employee-name" class="col-form-label">Bill Number:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="billingNumber" type="text" class="form-control-sm" name="billingNumber" id="billingNumberId"/>
+                            <form:input path="billingNumber" type="text" class="form-control-sm auto-val" name="billingNumber" id="billingNumberId"/>
                         </div>
                     </div>
                       <div class="row mb-2">

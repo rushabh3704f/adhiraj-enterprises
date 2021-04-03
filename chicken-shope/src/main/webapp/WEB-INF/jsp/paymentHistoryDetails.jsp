@@ -82,7 +82,11 @@
                                 
                             </tr>
                             </c:forEach>
+                         </tbody>
                     </table>
+                </div>
+                <div class=" col-md-12 mb-3 text-center">
+                	<button class="btn btn-info"><i class="fas fa-arrow-left"></i> Go Back</button>
                 </div>
             </div>
         </div>
