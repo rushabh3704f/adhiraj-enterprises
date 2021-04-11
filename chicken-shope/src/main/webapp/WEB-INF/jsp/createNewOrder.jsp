@@ -40,7 +40,7 @@
                 <div class="col-md-12 col-12">
                     <div class="page-path">
                         <div class="page-name mb-2">
-                            New Order
+                            New Order For Sale
                         </div>
                         <i class="fa fa-home"></i>/ <b>New Order</b>
                     </div>
@@ -135,41 +135,42 @@
                 <div class="col-md-2 mt-2">
                     <div class="form-group">
                         <label for="product-name">Product Name</label>
-                        <form:select path="product" items="${productMasterList}" onchange='getDropdownId(this)' itemValue="productId" id="productId" itemLabel="productName" cssClass="form-control form-control-sm" />
+                        <form:select path="product" items="${productMasterList}" onchange='getDropdownId(this)' itemValue="productId" id="productId" itemLabel="productName" cssClass=" form-control-sm" />
                         <span id="productError" style="color:red"></span>
                     </div>
                 </div>
                 
-                     <div class="col-md-2 mt-2">
+                <div class="col-md-2 mt-2">
                     <div class="form-group">
                         <label for="product-unit">Unit Type</label>
-                        <form:input path="perKgOrPice" type="text" autocomplete="off" class=" form-control form-control-sm auto-val" id="perKgOrPiceId"  name="perKgOrPice" placeholder="Per Kg Or Pice"/>
+                        <form:input path="perKgOrPice" type="text" autocomplete="off" class="form-control-sm auto-val" id="perKgOrPiceId"  name="perKgOrPice" placeholder="Per Kg Or Pice"/>
                     </div>
                 </div>
                 
                 <div class="col-md-2 mt-2">
                     <div class="form-group">
                         <label for="product-unit">Unit</label>
-                        <form:input path="unit" type="text" autocomplete="off" class=" form-control form-control-sm " id="productUnitId" onkeyup="totalSum();" name="product-unit " placeholder="Product Unit"/>
+                        <form:input path="unit" type="text" autocomplete="off" class="form-control-sm " id="productUnitId" onkeyup="totalSum();" name="product-unit " placeholder="Product Unit"/>
                     </div>
                 </div>
                 <div class="col-md-2 mt-2">
                     <div class="form-group">
                         <label for="product-rate">Rate</label>
-                        <form:input path="rate" type="text" autocomplete="off" class=" form-control form-control-sm " id="productRateId" onkeyup="totalSum();" name="product-rate" placeholder="Product Rate"/>
+                        <form:input path="rate" type="text" autocomplete="off" class="form-control-sm " id="productRateId" onkeyup="totalSum();" name="product-rate" placeholder="Product Rate"/>
                     </div>
                 </div>
                 
                   <div class="col-md-2 mt-2">
                     <div class="form-group">
                         <label for="product-rate">Total</label>
-                        <form:input path="sum" type="text" autocomplete="off" class=" form-control form-control-sm auto-val" id="sumId" name="product-rate" placeholder="Total Product Rate"/>
+                        <form:input path="sum" type="text" autocomplete="off" class="form-control-sm auto-val" id="sumId" name="product-rate" placeholder="Total Product Rate"/>
                     </div>
                 </div>
                 
-                <div class="col-md-2 mt-5">
-                    <div class="form-group">
-                        <button name="commandPass" type="submit" value="submit" class="btn btn-success btn-sm" 
+                <div class="col-md-2 mt-3">
+                    <div class="form-group text-right">
+                    <br>
+                        <button name="commandPass" type="submit" value="submit" class="btn btn-success btn-sm btn-radious" 
                                onclick="return validateDropdown();" >
                          Add Item In List</button>
                     </div>
@@ -225,7 +226,7 @@
                     <div class="form-group row ">
                         <label for="bill-amount " class="col-sm-6 col-form-label "><strong>Paid Amount:</strong></label>
                         <div class="col-sm-6 ">
-                            <form:input path="paidAmount" type="text " class="form-control-sm " name="paidAmountId" onkeyup="paidAmountFun();" value="" id="paidAmountId"/>
+                            <form:input path="paidAmount" type="text " autocomplete="off" class="form-control-sm " name="paidAmountId" onkeyup="paidAmountFun();" value="" id="paidAmountId"/>
                         </div>
                     </div>
                     
@@ -235,10 +236,12 @@
                             <form:input path="unPaidAmount" type="text " class="form-control-sm auto-val"    name="unPaidAmountId" value="" id="unPaidAmountId"/>
                         </div>
                     </div>
-                    
-                     <button name="commandPass" type="submit" value="submit" class="btn btn-success btn-sm" 
-                             onclick="return validateForm();" >Generate Order</button>
-                     <input type="hidden" name="command">
+                    <div class="form-group text-right mt-4">
+                    	<button name="commandPass" type="submit" value="submit" class=" btn btn-success btn-sm btn-radious" 
+                             onclick="return validateForm();" >Save Order</button>
+                     	<input type="hidden" name="command">
+                    </div>
+                     
               
                 </div>
                 <div class="col-md-12">

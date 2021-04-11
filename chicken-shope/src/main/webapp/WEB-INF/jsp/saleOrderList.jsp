@@ -44,9 +44,9 @@
                 <div class="col-md-6 col-6">
                     <div class="page-path">
                         <div class="page-name mb-2">
-                            Order List
+                           Sale Order List
                         </div>
-                        <i class="fa fa-home"></i>/ My Account / <b>Order List</b>
+                        <i class="fa fa-home"></i>/ My Account / <b>Sale Order List</b>
                     </div>
                 </div>
                 <div class="col-md-6 col-6">

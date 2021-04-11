@@ -35,8 +35,19 @@
 	<jsp:include page="header.jsp" />
     <section class="section pt-5 pb-5 maizil-not-found-page margin-top background-color">
         <div class="container-fluid pl-5 pr-5">
-
-            <div class="row row-bg user-detail">
+			<div class="row row-bg user-detail">
+				 <div class="col-md-8 col-10">
+                                <h3>${role}</h3>
+                            </div>
+                 <div class="col-md-4 col-2 pl-0 text-right">
+                                <p class="mb-4 mt-2">
+                                <button class="btn btn-success print_btn"><i class="icofont-print"></i>
+                                        PRINT</button>
+                                    
+                                </p>
+                            </div>
+			</div>
+            <div class="row row-bg user-detail" id="printable">
                 <div class="col-md-8 mx-auto">
                     <div class="p-5 maizil-invoice bg-white shadow-sm">
                         <div class="row mb-1 pb-3 ">
@@ -170,6 +181,17 @@
         
         
         
+    </script>
+    
+    
+	<!-- Script for print pdf file -->
+    <script type="text/javascript">
+        function printData() {
+            print();
+        }
+        $('.print_btn').on('click', function() {
+            printData();
+        })
     </script>
 
 </html>
