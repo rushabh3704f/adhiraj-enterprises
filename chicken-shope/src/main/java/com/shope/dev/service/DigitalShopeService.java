@@ -138,7 +138,12 @@ public class DigitalShopeService {
 	public void createPurchaseProduct(ShopeCreateProductForPurchase shopeCreateProductForPurchase) {
 		// TODO Auto-generated method stub
 		shopeCreateProductForPurchase.setIsActive("A");
-		shopeCreateProductForPurchase.setProductName(shopeCreateProductForPurchase.getProductName()+" ("+shopeCreateProductForPurchase.getUnitType()+ ")");
+		if(shopeCreateProductForPurchase.getCategory().equals("Egg")) {
+			shopeCreateProductForPurchase.setProductName(shopeCreateProductForPurchase.getCategory());
+		}
+		else {
+			shopeCreateProductForPurchase.setProductName(shopeCreateProductForPurchase.getCategory()+" : "+shopeCreateProductForPurchase.getProductName()+" ("+shopeCreateProductForPurchase.getUnitType()+ ")");
+		}
 		shopeCreateProductForPurchaseRepository.save(shopeCreateProductForPurchase);
 	}
 
@@ -150,7 +155,12 @@ public class DigitalShopeService {
 	public void createProductForSale(ShopeCreateProductForSale shopeCreateProductForSale) {
 		// TODO Auto-generated method stub
 		shopeCreateProductForSale.setIsActive("A");
-		shopeCreateProductForSale.setProductName(shopeCreateProductForSale.getProductName()+" ("+shopeCreateProductForSale.getUnitType()+ ")");
+		if(shopeCreateProductForSale.getCategory().equals("Egg")) {
+			shopeCreateProductForSale.setProductName(shopeCreateProductForSale.getCategory());
+		}
+		else {
+		shopeCreateProductForSale.setProductName(shopeCreateProductForSale.getCategory()+" : "+shopeCreateProductForSale.getProductName()+" ("+shopeCreateProductForSale.getUnitType()+ ")");
+		}
 		shopeCreateProductForSaleRepository.save(shopeCreateProductForSale);
 
 	}
@@ -350,8 +360,7 @@ public class DigitalShopeService {
 		tempProductDetailsForPurchase.setSum(billingDetailsForPurchase.getSum());
 		tempProductDetailsForPurchase.setCreatedOn(dtf.format(now));
 		tempProductDetailsForPurchase.setCreatedBy("Alam");
-		tempProductDetailsForPurchase
-				.setProductName(getPurchaseProductNameByProductId(billingDetailsForPurchase.getProduct()));
+		tempProductDetailsForPurchase.setProductName(getPurchaseProductNameByProductId(billingDetailsForPurchase.getProduct()));
 		tempProductDetailsForPurchaseRepository.save(tempProductDetailsForPurchase);
 
 	}

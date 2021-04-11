@@ -93,10 +93,10 @@ public class DigitalShopeController {
 	    int maxNumber=digitalShopeService.getMaxNumber();
 	    String billNumber= utils.uniqueBillNo(maxNumber);
 	    model.addAttribute("billNumber",billNumber);
-	    
+	   
 	    int billAmount = digitalShopeService.getSumOfProduct();
 	    model.addAttribute("billAmount",billAmount);
-	    
+	    model.addAttribute("unPaidAmount",billAmount);
 	    List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
 		model.addAttribute("productMasterList",productMasterList);
 		
@@ -132,6 +132,8 @@ public class DigitalShopeController {
 	    model.addAttribute("billNumber",billDetailsForSale.getBillingNumber());
 	    int billAmount = digitalShopeService.getSumOfProduct();
 	    model.addAttribute("billAmount",billAmount);
+	    model.addAttribute("unPaidAmount",billAmount);
+	    
 	    List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
 	  	model.addAttribute("productMasterList",productMasterList);
 	    model.addAttribute("systemDate",utils.getCurrentDate());
@@ -575,6 +577,7 @@ public class DigitalShopeController {
 	    
 	    int billAmount = digitalShopeService.getSumOfPurchaseProduct();
 	    model.addAttribute("billAmount",billAmount);
+	    model.addAttribute("unPaidAmount",billAmount);
 	    
 	    List<ShopeCreateProductForPurchase>productMasterList = digitalShopeService.getCreatedPurchaseProduct();
 		model.addAttribute("productMasterList",productMasterList);
@@ -614,6 +617,7 @@ public class DigitalShopeController {
 	    
 	    int billAmount = digitalShopeService.getSumOfPurchaseProduct();
 	    model.addAttribute("billAmount",billAmount);
+	    model.addAttribute("unPaidAmount",billAmount);
 	    
 	    List<ShopeCreateProductForPurchase>shopeCreateProductForPurchase = digitalShopeService.getCreatedPurchaseProduct();
 	  	model.addAttribute("productMasterList",shopeCreateProductForPurchase);

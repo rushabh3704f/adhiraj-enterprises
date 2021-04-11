@@ -126,7 +126,7 @@
                             <label for="product-category" class="col-form-label">Category:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:select path="category" class="form-control-sm" name="categoryId" id="categoryId">
+                            <form:select path="category" class="form-control-sm clearData" name="categoryId" id="categoryId">
                                 <option value="Chicken">Chicken</option>
                                 <option value="Mutton">Mutton</option>
                                 <option value="Egg">Egg</option>
@@ -138,7 +138,7 @@
                             <label for="product-name" class="col-form-label">Product Name:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="productName" type="text" autocomplete="off" class="form-control-sm" name="productNameId" id="productNameId" placeholder="Enter Product Name"/>
+                            <form:input path="productName" type="text" autocomplete="off" class="form-control-sm clearData" name="productNameId" id="productNameId" placeholder="Enter Product Name"/>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -146,7 +146,7 @@
                             <label for="unit" class="col-form-label">Unit:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="unit" type="text" autocomplete="off" class="form-control-sm" name="unitId" id="unitId" placeholder="Enter Unit"/>
+                            <form:input path="unit" type="text" autocomplete="off" class="form-control-sm clearData" name="unitId" id="unitId" placeholder="Enter Unit"/>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -154,7 +154,7 @@
                             <label for="unit-type" class="col-form-label">Unit Type:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:select path="unitType" class="form-control-sm" name="unitTypeId" id="unitTypeId">
+                            <form:select path="unitType" class="form-control-sm clearData" name="unitTypeId" id="unitTypeId">
                                 <option>Kg</option>
                                 <option>Piece</option>
                             </form:select>
@@ -166,7 +166,7 @@
                             <label for="rate" class="col-form-label">Rate:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="rate" type="text" autocomplete="off" class="form-control-sm" name="rateId" id="rateId" placeholder="Enter Rate"/>
+                            <form:input path="rate" type="text" autocomplete="off" class="form-control-sm clearData" name="rateId" id="rateId" placeholder="Enter Rate"/>
                         </div>
                     </div>
                 </div>
@@ -207,6 +207,10 @@
     
       <script>
      function addSaleProduct(){
+    	 
+    	 $(".clearData").each(function() {
+    		   $(this).val('');
+    	  });
     	 
     	 $("#createDivId").show();
     	 $("#updateDivId").hide();

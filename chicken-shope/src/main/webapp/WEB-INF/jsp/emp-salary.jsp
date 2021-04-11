@@ -88,7 +88,7 @@
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <form:hidden path = "id" id = "id"/>
-                                       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#emp-salary-modal" 
+                                       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLabelId" 
                                                onclick="updateEmpSalById('${shopeCreateEmployeeSalary.id}'
                                                							,'${shopeCreateEmployeeSalary.firstName}'
                                                							,'${shopeCreateEmployeeSalary.leaveInDays}'
@@ -97,6 +97,7 @@
                                                							,'${shopeCreateEmployeeSalary.pendingSalary}'
                                                							,'${shopeCreateEmployeeSalary.paymentDate}'
                                                						    ,'${shopeCreateEmployeeSalary.createdOn}'
+                                               						    ,'${shopeCreateEmployeeSalary.totalSalary}'
                                                							)">
                                                Update</button>
                                         &nbsp;<a href="/deleteSalaryById?clientId=${shopeCreateEmployeeSalary.id}"><button type="button" class="btn btn-danger btn-sm">Remove</button></a>
@@ -135,7 +136,7 @@
                                 <label for="employee-name" class="col-form-label">Employee Name:</label>
                             </div>
                             <div class="col-md-9">
-                                <form:input path="firstName" list="firstName" id="firstNameId" name="firstNameId" autocomplete="off" class="form-control-sm"/>
+                                <form:input path="firstName" list="firstName" id="firstNameId" name="firstNameId" autocomplete="off" class="form-control-sm clearData"/>
 								  <datalist id="firstName">
 								     <c:forEach var="shopeCreateEmp" varStatus="counter" items="${shopeCreateEmployeeList}">	
 								    	 <option id="${shopeCreateEmp.employeeId}" value="${shopeCreateEmp.firstName}"/>
@@ -149,7 +150,7 @@
                                 <label for="emp-salary" class="col-form-label">Salary:</label>
                             </div>
                             <div class="col-md-9">
-                                <form:input path="salary" type="text" class="form-control-sm" name="salaryId" id="salaryId"/>
+                                <form:input path="salary" type="text" class="form-control-sm auto-val clearData"  name="salaryId" id="salaryId"/>
                             </div>
                         </div>
                         
@@ -158,7 +159,7 @@
                                 <label for="leaves" class="col-form-label">Leaves:</label>
                             </div>
                             <div class="col-md-9">
-                                <form:input path="leaveInDays"  class="form-control-sm" name="leaveInDaysId" onkeyup='getTotalSalary(this)' type="number" min="1" max="30" id="leaveInDaysId"/>
+                                <form:input path="leaveInDays"  class="form-control-sm clearData" autocomplete="off" name="leaveInDaysId" onkeyup='getTotalSalary(this)' type="number" min="1" max="30" id="leaveInDaysId"/>
                             </div>
                         </div>
                         
@@ -167,7 +168,7 @@
                                 <label for="total-salary" class="col-form-label">Total Salary:</label>
                             </div>
                             <div class="col-md-9">
-                                <form:input path="totalSalary" type="text" class="form-control-sm" name="totalSalId" id="totalSalId"/>
+                                <form:input path="totalSalary" type="text" class="form-control-sm auto-val clearData" name="totalSalId" id="totalSalId"/>
                             </div>
                         </div>
                         
@@ -177,7 +178,7 @@
                                 <label for="emp-salary" class="col-form-label">Payment:</label>
                             </div>
                             <div class="col-md-9">
-                                <form:input path="payment" type="text" class="form-control-sm" name="paymentId" onkeyup="paymentFun(this);" id="paymentId"/>
+                                <form:input path="payment" type="text" class="form-control-sm clearData" autocomplete="off" name="paymentId" onkeyup="paymentFun(this);" id="paymentId"/>
                             </div>
                          </div>
                          
@@ -187,7 +188,7 @@
                                 <label for="emp-salary" class="col-form-label">Pending Salary:</label>
                             </div>
                             <div class="col-md-9">
-                                <form:input path="pendingSalary" type="text" class="form-control-sm" name="pendingSalaryId" id="pendingSalaryId"/>
+                                <form:input path="pendingSalary" type="text" class="form-control-sm auto-val clearData" name="pendingSalaryId" id="pendingSalaryId"/>
                             </div>
                          </div>
                         
@@ -196,7 +197,7 @@
                                 <label for="leaves" class="col-form-label">Date:</label>
                             </div>
                             <div class="col-md-9">
-                              <form:input path="paymentDate" type="date" class="form-control-sm" name="paymentDateId" id="paymentDateId"/>
+                              <form:input path="paymentDate" type="date" class="form-control-sm clearData" name="paymentDateId" id="paymentDateId"/>
                               </div>
                         </div>
                         
@@ -245,27 +246,24 @@
 
 
 
-     function updateEmpSalById(id,fname,ldays,sal,payment,pending,paymentDate,createdOn){
-    	 //===================================================
-    	 /* var d = new Date(createdOn);
-    	 const formatYmd = date => d.toISOString().slice(0, 10);
-    	 var date1=formatYmd(new Date());
-    	 alert(date1); */
-    	     	 
+     function updateEmpSalById(id,fname,ldays,sal,payment,pending,paymentDate,createdOn,totalSal,pendingSal){   
     	 $("#id").val(id);
     	 $("#firstNameId").val(fname);
     	 $("#leaveInDaysId").val(ldays);
     	 $("#salaryId").val(sal);
     	 $("#paymentId").val(payment);
-    	 $("#pendingSalaryId").val(pending);
-    	 //$("#paymentDateId").val(paymentDate);
-    	 //$("#totalsalaryId").val(pending);
-    	 $('#emp-salary-modal').modal('show');
+    	 $("#totalSalId").val(totalSal);
+         $("#pendingSalaryId").val(pending);
+    	 $('#empSalaryModal').modal('show');	
      }
      
 
     function empSalaryModal(){
+    	 $(".clearData").each(function() {
+  		   $(this).val('');
+  	      });
     	 $('#empSalaryModal').modal('show');
+    	 //$('#exampleModalLabelId').modal('show'); 
      }
      
     function get_data(elem){
@@ -290,6 +288,8 @@
 		   	        success : function(data) {
 		   	  				  //alert(data.salary);
 		   	  				  $("#salaryId").val(data.salary);
+		   	  			 	  $("#totalSalId").val(data.salary);
+		   	     	          $("#pendingSalaryId").val(data.salary);
 		   	        },
 		   	        error:function(error){
 		   	        	alert(data);
@@ -310,6 +310,7 @@
 		     var totalSalary = parseInt(totalPresentDay) * parseInt(oneDaySalary);
 		     //alert(totalSalary);
 		     document.getElementById("totalSalId").value = totalSalary;
+		     $("#pendingSalaryId").val(totalSalary);//added by sanju 11-04-2021
 	 }
 	 
 	 

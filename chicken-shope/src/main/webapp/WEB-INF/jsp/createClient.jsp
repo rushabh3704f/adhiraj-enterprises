@@ -126,7 +126,7 @@
                             <label for="client-name" class="col-form-label">Client Name:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="clientName" autocomplete="off" type="text" class="form-control-sm" name="clientNameId" id="clientNameId"/>
+                            <form:input path="clientName" autocomplete="off" type="text" class="form-control-sm clearData" name="clientNameId" id="clientNameId"/>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -134,7 +134,7 @@
                             <label for="billing-name" class="col-form-label">Billing Name:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="billingName" type="text" autocomplete="off" class="form-control-sm" name="billingNameId" id="billingNameId"/>
+                            <form:input path="billingName" type="text" autocomplete="off" class="form-control-sm clearData" name="billingNameId" id="billingNameId"/>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -142,7 +142,7 @@
                             <label for="contact-number" class="col-form-label">Phone:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:input path="phoneNumber" type="text" autocomplete="off" class="form-control-sm" name="phoneNumberId" id="phoneNumberId"/>
+                            <form:input path="phoneNumber" type="text" autocomplete="off" class="form-control-sm clearData" name="phoneNumberId" id="phoneNumberId"/>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -150,7 +150,7 @@
                             <label for="address" class="col-form-label">Address:</label>
                         </div>
                         <div class="col-md-9">
-                            <form:textarea path="address" class="form-control" autocomplete="off" name="address" id="addressId" rows="3" style="resize: none;"/>
+                            <form:textarea path="address" class="form-control clearData" autocomplete="off" name="address" id="addressId" rows="3" style="resize: none;"/>
                         </div>
                     </div>
                 </div>
