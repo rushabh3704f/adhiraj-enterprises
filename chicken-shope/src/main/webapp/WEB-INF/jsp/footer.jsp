@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-   <footer class="pt-4 pb-4 text-center ">
+   <footer class="pt-4 pb-4 text-center no-print">
         <div class="container ">
             <p class="mt-0 mb-0 ">© Copyright 2021 Billing CRM. All Rights Reserved</p>
 
