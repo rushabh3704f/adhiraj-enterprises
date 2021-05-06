@@ -27,6 +27,7 @@
 
     <link href="css/maizil.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -132,7 +133,7 @@
             </div>
 
             <div class="row mt-1 row-bg">
-                <div class="col-md-2 mt-2">
+                <div class="col-md-3 mt-2">
                     <div class="form-group">
                         <label for="product-name">Product Name</label>
                         <form:select path="product" items="${productMasterList}" onchange='getDropdownId(this)' itemValue="productId" id="productId" itemLabel="productName" cssClass=" form-control-sm" />
@@ -167,12 +168,12 @@
                     </div>
                 </div>
                 
-                <div class="col-md-2 mt-3">
+                <div class="col-md-1 mt-3 pl-0">
                     <div class="form-group text-right">
                     <br>
                         <button name="commandPass" type="submit" value="submit" class="btn btn-success btn-sm btn-radious" 
                                onclick="return validateDropdown();" >
-                         Add Item In List</button>
+                         Add Item</button>
                     </div>
                 </div>
                 <div class="col-md-12 ">

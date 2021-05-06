@@ -229,10 +229,3 @@
         overflow-x: scroll;
     }
 }
-@media print {
-
-    .no-print,
-    .no-print * {
-        display: none !important;
-    }
-}

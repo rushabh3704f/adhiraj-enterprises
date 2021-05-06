@@ -26,6 +26,7 @@
 
     <link href="css/maizil.css" rel="stylesheet">
     <link href="./css/common.css" rel="stylesheet">
+    <link href="./css/pdf.css" rel="stylesheet">
 
 </head>
 
@@ -40,17 +41,42 @@
                 <div class="col-md-8 mx-auto">
                     <div class="p-5 maizil-invoice bg-white shadow-sm">
                         <div class="row mb-1 pb-3 ">
-                            <div class="col-md-8 col-10">
-                                <h3>${role}</h3>
-                            </div>
-                            <div class="col-md-4 col-2 pl-0 text-right">
-                                <p class="mb-4 mt-2">
-                                    <a class="text-primary font-weight-bold" href="#"><i class="icofont-print"></i>
-                                        PRINT</a>
-                                </p>
-                            </div>
+                            <div class="col-md-8 col-10 pl-0">
+								<div class="c_name h3">
+									<h3>${role}</h3>
+								</div>
+							</div>
+							<div class="col-md-4 col-2 pr-0 text-right no-print">
+								<p class="mb-4 mt-2">
+									<a class="text-primary font-weight-bold print_btn" href="#"><i
+										class="icofont-print"></i> PRINT</a>
+								</p>
+							</div>
                         </div>
-                        <div class="row">
+                        <div class="row invoice-block">
+							<div class="col-md-12 ">
+								<div class="h3">Invoice</div>
+								<h6 class="mb-2 mt-2 text-black">
+									Invoice No: <strong>${productDetailsForPurchaseList[0].billingNumber}</strong>
+								</h6>
+								<p class="mb-1 text-black">
+									Invoice Date: <strong>${orderPlaceDate}</strong>
+								</p>
+								<p class="mb-3 text-black">
+									Phone: <strong>${phoneNumber}</strong> 
+								</p>
+							</div>
+						</div>
+						<div class="row mt-5 invoice-to-block">
+							<div class="col-md-12">
+								<p class="mb-1 text-black"><strong>Invoiced To</strong> </p>
+								<h6 class="mb-1 text-black">
+									<strong>${billName}</strong>
+								</h6>
+								<p class="mb-1">${billAddress}</p>
+							</div>
+						</div>
+                        <%-- <div class="row">
                             <div class="col-md-8">
                                 <p class="mb-1">Ordered from:</p>
                                 <h6 class="mb-1 text-black"><strong>${billName}</strong></h6>
@@ -65,10 +91,10 @@
                                     <strong>Phone:</strong> ${phoneNumber}
                                 </p>
                             </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-12">
-                                <table class="table table-bordered mt-3 mb-0">
+                        </div> --%>
+                        
+                        <div class="row pl-0 mb-print">
+                            <table class="table table-bordered mt-5 mb-0">
                                     <thead class="thead-light">
                                         <tr>
                                             <th class="text-black font-weight-bold" scope="col">Sr.</th>
@@ -97,22 +123,20 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
-
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="amount-in-word">
-                                    Amount In Word <br>
-                                    <div class="text-dark word-amount"> Nine Thousand Only</div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-right">This Is Computer Generated Invoice</p>
-                            </div>
+                            <div class="col-md-6 pl-0">
+								<div class="amount-in-word">
+										Amount In Word <br>
+									<div class="text-dark word-amount" id="amount-in-text" style="text-transform: capitalize;"></div>
+								</div>
+							</div>
+							<div class="col-md-6 pr-0">
+									<p class="text-right">This Is Computer Generated Invoice</p>
+							</div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-12">
+                            <div class="col-md-7 pl-0">
                                 <div class="company-detail">
                                     <div class="company-name">${role}</div>
                                     <div class="company-name1"> Chicken And Mutton Suppliers</div>
@@ -121,6 +145,11 @@
                                     <div class="company-heading"> <strong>Address:</strong> Shop No.00, Road No.13, Baiganwadi Govandi Mumbai 400043 </div>
                                 </div>
                             </div>
+                            <div class="col-md-5 pr-0 my-auto">
+								<div class="authorised-sign text-right text-decoration-underline"> 
+									Authorized Signature
+								</div>
+							</div>
                         </div>
                     </div>
                 </div>
@@ -170,5 +199,75 @@
         
         
     </script>
+    <script type="text/javascript">
+//System for American Numbering 
+var th_val = ['', 'thousand', 'million', 'billion', 'trillion'];
+// System for uncomment this line for Number of English 
+// var th_val = ['','thousand','million', 'milliard','billion'];
+ 
+var dg_val = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+var tn_val = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+var tw_val = ['twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+function toWordsconver(s) {
+  s = s.toString();
+    s = s.replace(/[\, ]/g, '');
+    if (s != parseFloat(s))
+        return 'not a number ';
+    var x_val = s.indexOf('.');
+    if (x_val == -1)
+        x_val = s.length;
+    if (x_val > 15)
+        return 'too big';
+    var n_val = s.split('');
+    var str_val = '';
+    var sk_val = 0;
+    for (var i = 0; i < x_val; i++) {
+        if ((x_val - i) % 3 == 2) {
+            if (n_val[i] == '1') {
+                str_val += tn_val[Number(n_val[i + 1])] + ' ';
+                i++;
+                sk_val = 1;
+            } else if (n_val[i] != 0) {
+                str_val += tw_val[n_val[i] - 2] + ' ';
+                sk_val = 1;
+            }
+        } else if (n_val[i] != 0) {
+            str_val += dg_val[n_val[i]] + ' ';
+            if ((x_val - i) % 3 == 0)
+                str_val += 'hundred ';
+            sk_val = 1;
+        }
+        if ((x_val - i) % 3 == 1) {
+            if (sk_val)
+                str_val += th_val[(x_val - i - 1) / 3] + ' ';
+            sk_val = 0;
+        }
+    }
+    if (x_val != s.length) {
+        var y_val = s.length;
+        str_val += 'point ';
+        for (var i = x_val + 1; i < y_val; i++)
+            str_val += dg_val[n_val[i]] + ' ';
+    }
+    return str_val.replace(/\s+/g, ' ');
+}
+
+	// Calculating Total value
+	var sum = 0;
+	$(".sumId").each(function() {
+		sum += +$(this).text();
+	});
+	var totalsum = sum; 
+	//Converting Number To Text
+	var Inwords = toWordsconver(totalsum);
+	$("#amount-in-text").text(Inwords+ "Only")
+</script>
+    
+    <!-- Script for print pdf file -->
+	<script type="text/javascript">
+		$('.print_btn').on('click', function() {
+			print();
+		})
+	</script>
 
 </html>
