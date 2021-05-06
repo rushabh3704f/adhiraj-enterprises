@@ -86,7 +86,9 @@
                     </table>
                 </div>
                 <div class=" col-md-12 mb-3 text-center">
-                	<button class="btn btn-info"><i class="fas fa-arrow-left"></i> Go Back</button>
+                	 <a href="/purchaseOrderList" class="btn btn-info">
+					  <i class="fas fa-arrow-left"> Go Back </i> 
+					 </a>
                 </div>
             </div>
         </div>

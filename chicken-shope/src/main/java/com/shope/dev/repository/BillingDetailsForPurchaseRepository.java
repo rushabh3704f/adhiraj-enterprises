@@ -46,4 +46,17 @@ public interface BillingDetailsForPurchaseRepository extends JpaRepository<Billi
 	
 	
 	
+	//04-05-2021-------
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE billing_details_for_purchase set bill_amount=bill_amount-:sum where billing_number=:billing_number", nativeQuery = true)
+	public void updateBillingDetailsForSaleAfterProductDelete(@Param("billing_number") String billing_number,@Param("sum") String sum);
+	
+	//04-05-2021
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE billing_details_for_purchase set un_paid_amount=bill_amount-paid_amount where billing_number=:billing_number", nativeQuery = true)
+	public void updateBillingDetailsForSaleAfterProductDelete1(@Param("billing_number") String billing_number);
+		
+	
 }

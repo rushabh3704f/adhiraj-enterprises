@@ -205,8 +205,8 @@
         
         
    	 function rePaymentFunction(){
-	     var paidAmount = parseInt($("#paidAmountId").val())+parseInt($("#rePayAmountId").val());
-	     var unPaidAmount = parseInt($("#unPaidAmountId").val())-parseInt($("#rePayAmountId").val());
+	     var paidAmount = parseFloat($("#paidAmountId").val())+parseFloat($("#rePayAmountId").val());
+	     var unPaidAmount = parseFloat($("#unPaidAmountId").val())-parseFloat($("#rePayAmountId").val());
 	     $('#paidAmountId').val(paidAmount);
          $('#unPaidAmountId').val(unPaidAmount);
          document.productDetailsForSale.command.value='rePay';

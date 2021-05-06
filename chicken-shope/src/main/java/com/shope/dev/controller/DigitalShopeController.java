@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -94,7 +95,7 @@ public class DigitalShopeController {
 	    String billNumber= utils.uniqueBillNo(maxNumber);
 	    model.addAttribute("billNumber",billNumber);
 	   
-	    int billAmount = digitalShopeService.getSumOfProduct();
+	    double billAmount = digitalShopeService.getSumOfProduct();
 	    model.addAttribute("billAmount",billAmount);
 	    model.addAttribute("unPaidAmount",billAmount);
 	    List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
@@ -125,12 +126,16 @@ public class DigitalShopeController {
 		if(data==null) {
 			return "redirect:loginPage";
 		}
+		
+		String productSplit[]=billDetailsForSale.getProduct().split(",");		
+		billDetailsForSale.setProduct(productSplit[0]);
+		
 		digitalShopeService.addItemInList(billDetailsForSale);
 		List<TempProductDetailsForSale> tempProductDetailsForSale=digitalShopeService.getAllProductDetailsByBillingNumber();
 		model.addAttribute("shopeCreateOrderForSaleList",tempProductDetailsForSale);
 		model.addAttribute("shopeCreateOrderForSale",billDetailsForSale);
 	    model.addAttribute("billNumber",billDetailsForSale.getBillingNumber());
-	    int billAmount = digitalShopeService.getSumOfProduct();
+	    double billAmount = digitalShopeService.getSumOfProduct();
 	    model.addAttribute("billAmount",billAmount);
 	    model.addAttribute("unPaidAmount",billAmount);
 	    
@@ -139,7 +144,6 @@ public class DigitalShopeController {
 	    model.addAttribute("systemDate",utils.getCurrentDate());
 	    model.addAttribute("BASE_URL",Constants.BASE_URL);
 	    model.addAttribute("role",data.getRole());
-
 		return "createNewOrder";
 	}
 	
@@ -176,28 +180,29 @@ public class DigitalShopeController {
 	   }
 	
 	
-	@RequestMapping("/deleteProductById")
-	public String deleteProductById(Model model, @ModelAttribute("shopeCreateOrderForSale")BillingDetailsForSale billDetailsForSale, BindingResult bindingResult) {
+	@RequestMapping("/deleteProductById/{id}")
+	public String deleteProductById(Model model, @PathVariable("id") String id, @ModelAttribute("shopeCreateOrderForSale")BillingDetailsForSale billDetailsForSale, BindingResult bindingResult) {
 
 		UserData data = (UserData) session.getAttribute("userData");
 		if(data==null) {
 			return "redirect:loginPage";
 		}
-		
-		digitalShopeService.deleteSoldProductById(String.valueOf(billDetailsForSale.getId()),billDetailsForSale.getSum());
+		 
+		digitalShopeService.deleteSoldProductById(id,billDetailsForSale.getSum());
 		List<ShopeCreateClient> shopeCreateClientList=digitalShopeService.getAllClientList();
 		model.addAttribute("shopeCreateClientList",shopeCreateClientList);
 		
 		List<TempProductDetailsForSale> tempProductDetailsForSale=digitalShopeService.getAllProductDetailsByBillingNumber();
 		model.addAttribute("shopeCreateOrderForSaleList",tempProductDetailsForSale);
 		
-	    int billAmount = digitalShopeService.getSumOfProduct();
+		double billAmount = digitalShopeService.getSumOfProduct();
 	    model.addAttribute("billAmount",billAmount);
 	    
 	    int maxNumber=digitalShopeService.getMaxNumber();
 	    String billNumber= utils.uniqueBillNo(maxNumber);
 	    model.addAttribute("billNumber",billNumber);
-	    
+	    model.addAttribute("unPaidAmount",billAmount);
+
 	    model.addAttribute("systemDate",utils.getCurrentDate());	    
 	    List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
 	  	model.addAttribute("productMasterList",productMasterList);
@@ -439,6 +444,14 @@ public class DigitalShopeController {
 			return "redirect:loginPage";
 		}
 		
+		String productSplit[]=shopeCreateProductForPurchase.getProductId().split(",");	
+		for (String string : productSplit) {
+			if(string.length()>6) {
+				shopeCreateProductForPurchase.setProductId(string);
+				break;
+			}
+		}
+		
 		shopeCreateProductForPurchase.setCreatedOn(utils.getCurrentDate());
 		digitalShopeService.createPurchaseProduct(shopeCreateProductForPurchase);
 		
@@ -528,6 +541,15 @@ public class DigitalShopeController {
 			return "redirect:loginPage";
 		}
 		
+		String productSplit[]=shopeCreateProductForSale.getProductId().split(",");	
+		for (String string : productSplit) {
+			if(string.length()>6) {
+				shopeCreateProductForSale.setProductId(string);
+				break;
+			}
+		}
+		
+		
 		shopeCreateProductForSale.setCreatedOn(utils.getCurrentDate());
 		digitalShopeService.createProductForSale(shopeCreateProductForSale);
 		
@@ -575,7 +597,7 @@ public class DigitalShopeController {
 	    String billNumber= utils.uniqueBillNo(maxNumber);
 	    model.addAttribute("billNumber",billNumber);
 	    
-	    int billAmount = digitalShopeService.getSumOfPurchaseProduct();
+	    double billAmount = digitalShopeService.getSumOfPurchaseProduct();
 	    model.addAttribute("billAmount",billAmount);
 	    model.addAttribute("unPaidAmount",billAmount);
 	    
@@ -615,7 +637,7 @@ public class DigitalShopeController {
 		model.addAttribute("billingDetailsForPurchase",billingDetailsForPurchase);
 	    model.addAttribute("billNumber",billingDetailsForPurchase.getBillingNumber());
 	    
-	    int billAmount = digitalShopeService.getSumOfPurchaseProduct();
+	    double billAmount = digitalShopeService.getSumOfPurchaseProduct();
 	    model.addAttribute("billAmount",billAmount);
 	    model.addAttribute("unPaidAmount",billAmount);
 	    
@@ -666,22 +688,22 @@ public class DigitalShopeController {
 	
 	
 	
-	@RequestMapping("/deletePurchaseProductById")
-	public String deletePurchaseProductById(Model model, @ModelAttribute("shopeCreateOrderForPurchase")BillingDetailsForPurchase billingDetailsForPurchase, BindingResult bindingResult) {
+	@RequestMapping("/deletePurchaseProductById/{id}")
+	public String deletePurchaseProductById(Model model, @PathVariable("id") String id, @ModelAttribute("shopeCreateOrderForPurchase")BillingDetailsForPurchase billingDetailsForPurchase, BindingResult bindingResult) {
 
 		UserData data = (UserData) session.getAttribute("userData");
 		if(data==null) {
 			return "redirect:loginPage";
 		}
-		
-		digitalShopeService.deleteSoldPurchaseProductById(String.valueOf(billingDetailsForPurchase.getId()));
+
+		digitalShopeService.deleteSoldPurchaseProductById(id);
 		List<ShopeCreateClient> shopeCreateClientList=digitalShopeService.getAllClientList();
 		model.addAttribute("shopeCreateClientList",shopeCreateClientList);
 		
 		List<TempProductDetailsForPurchase> tempProductDetailsForPurchase=digitalShopeService.getAllPurchaseProductDetailsByBillingNumber();
 		model.addAttribute("tempProductDetailsForPurchase",tempProductDetailsForPurchase);
 		
-	    int billAmount = digitalShopeService.getSumOfPurchaseProduct();
+		double billAmount = digitalShopeService.getSumOfPurchaseProduct();
 	    model.addAttribute("billAmount",billAmount);
 	    
 	    int maxNumber=digitalShopeService.getMaxNumberFormPurchase();
@@ -714,7 +736,6 @@ public class DigitalShopeController {
 		List<BillingDetailsForPurchase>billingDetailsForPurchaseListWithProductName =new ArrayList<>();
 			
 		for (ShopeCreateProductForPurchase shopeCreateProductForPurchase : productMasterList) {
-			
 			for (BillingDetailsForPurchase billingDetailsForPurchase : billingDetailsForPurchaseList) {
 				if (billingDetailsForPurchase.getProduct().equals(shopeCreateProductForPurchase.getProductId())) {
 					billingDetailsForPurchase.setProductName(shopeCreateProductForPurchase.getProductName());
@@ -797,13 +818,11 @@ public class DigitalShopeController {
 		if(data==null) {
 			return "redirect:loginPage";
 		}
-		
 		List<BillingDetailsForSale>billingDetailsForSaleList = digitalShopeService.getAllBillingDetailsForSaleList();
 		List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
 		List<BillingDetailsForSale>billingDetailsForSaleListWithProductName =new ArrayList<>();	
 		
 		for (ShopeCreateProductForSale shopeCreateProductForSale : productMasterList) {
-			
 			for (BillingDetailsForSale billingDetailsForSale : billingDetailsForSaleList) {
 				if (billingDetailsForSale.getProduct().equals(shopeCreateProductForSale.getProductId())) {
 					billingDetailsForSale.setProductName(shopeCreateProductForSale.getProductName());
@@ -967,7 +986,7 @@ public class DigitalShopeController {
 	
 	
 	@RequestMapping("/deleteProductDetailsForSale")
-	public String deleteProductDetailsForSale(Model model,@ModelAttribute("productDetailsForSale")ProductDetailsForSale productDetailsForSale1, @RequestParam("productId") String productId,@RequestParam("billNumber") String billingNumber) {
+	public String deleteProductDetailsForSale(Model model,@ModelAttribute("productDetailsForSale")ProductDetailsForSale productDetailsForSale1, @RequestParam("productId") String productId,@RequestParam("billNumber") String billingNumber,@RequestParam("sum") String sum) {
 		
 		UserData data = (UserData) session.getAttribute("userData");
 		if(data==null) {
@@ -975,6 +994,10 @@ public class DigitalShopeController {
 		}
 		
 		productDetailsForSaleRepository.deleteProductDetailsForSaleById(productId);
+		billingDetailsForSaleRepository.updateBillingDetailsForSaleAfterProductDelete(billingNumber,sum);
+		billingDetailsForSaleRepository.updateBillingDetailsForSaleAfterProductDelete1(billingNumber);
+
+
 		List<ProductDetailsForSale>productDetailsForSaleList = digitalShopeService.getAllProductDetailsForSaleList(billingNumber);
 		List<ShopeCreateProductForSale>productMasterList = digitalShopeService.getCreatedSaleProduct();
 		List<ProductDetailsForSale>productDetailsForSaleListWithProductName =new ArrayList<>();
@@ -995,7 +1018,7 @@ public class DigitalShopeController {
 	}
 	
 	@RequestMapping("/deleteProductDetailsForPurchase")
-	public String deleteProductDetailsForPurchase(Model model,@ModelAttribute("productDetailsForPurchase")ProductDetailsForPurchase productDetailsForPurchase1, @RequestParam("productId") String productId,@RequestParam("billNumber") String billingNumber) {
+	public String deleteProductDetailsForPurchase(Model model,@ModelAttribute("productDetailsForPurchase")ProductDetailsForPurchase productDetailsForPurchase1, @RequestParam("productId") String productId,@RequestParam("billNumber") String billingNumber, @RequestParam("sum") String sum) {
 		
 		UserData data = (UserData) session.getAttribute("userData");
 		if(data==null) {
@@ -1003,6 +1026,9 @@ public class DigitalShopeController {
 		}
 		
 		productDetailsForPurchaseRepository.deleteProductDetailsForPurchaseById(productId);
+		billingDetailsForPurchaseRepository.updateBillingDetailsForSaleAfterProductDelete(billingNumber,sum);
+		billingDetailsForPurchaseRepository.updateBillingDetailsForSaleAfterProductDelete1(billingNumber);
+		
 		List<ProductDetailsForPurchase>productDetailsForPurchaseList = digitalShopeService.getAllProductDetailsForPurchaseList(billingNumber);
 		List<ShopeCreateProductForPurchase>productMasterList = digitalShopeService.getCreatedPurchaseProduct();
 		List<ProductDetailsForPurchase>productDetailsForPurchaseListWithProductName =new ArrayList<>();

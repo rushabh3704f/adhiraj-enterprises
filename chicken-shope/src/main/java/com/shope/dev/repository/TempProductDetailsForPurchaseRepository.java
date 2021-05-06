@@ -25,7 +25,7 @@ public interface TempProductDetailsForPurchaseRepository extends JpaRepository<T
 	
 	
 	@Query(value = "SELECT COALESCE(sum(sum),0) FROM temp_product_details_for_purchase m where is_active='A'", nativeQuery = true)
-	public int getSumOfPurchaseProduct();
+	public double getSumOfPurchaseProduct();
 	
 	
 	

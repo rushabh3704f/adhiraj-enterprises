@@ -138,12 +138,6 @@ public class DigitalShopeService {
 	public void createPurchaseProduct(ShopeCreateProductForPurchase shopeCreateProductForPurchase) {
 		// TODO Auto-generated method stub
 		shopeCreateProductForPurchase.setIsActive("A");
-		if(shopeCreateProductForPurchase.getCategory().equals("Egg")) {
-			shopeCreateProductForPurchase.setProductName(shopeCreateProductForPurchase.getCategory());
-		}
-		else {
-			shopeCreateProductForPurchase.setProductName(shopeCreateProductForPurchase.getCategory()+" : "+shopeCreateProductForPurchase.getProductName()+" ("+shopeCreateProductForPurchase.getUnitType()+ ")");
-		}
 		shopeCreateProductForPurchaseRepository.save(shopeCreateProductForPurchase);
 	}
 
@@ -155,12 +149,6 @@ public class DigitalShopeService {
 	public void createProductForSale(ShopeCreateProductForSale shopeCreateProductForSale) {
 		// TODO Auto-generated method stub
 		shopeCreateProductForSale.setIsActive("A");
-		if(shopeCreateProductForSale.getCategory().equals("Egg")) {
-			shopeCreateProductForSale.setProductName(shopeCreateProductForSale.getCategory());
-		}
-		else {
-		shopeCreateProductForSale.setProductName(shopeCreateProductForSale.getCategory()+" : "+shopeCreateProductForSale.getProductName()+" ("+shopeCreateProductForSale.getUnitType()+ ")");
-		}
 		shopeCreateProductForSaleRepository.save(shopeCreateProductForSale);
 
 	}
@@ -180,14 +168,12 @@ public class DigitalShopeService {
 
 	public List<BillingDetailsForSale> getAllCreateOrderForSale() {
 		// TODO Auto-generated method stub
-		List<BillingDetailsForSale> shopeCreateOrderForSaleList = billingDetailsForSaleRepository
-				.getAllCreateOrderForSale();
+		List<BillingDetailsForSale> shopeCreateOrderForSaleList = billingDetailsForSaleRepository.getAllCreateOrderForSale();
 		return shopeCreateOrderForSaleList;
 	}
 
 	public void generateBill(BillingDetailsForSale billDetailsForSale) {
 		// TODO Auto-generated method stub
-
 		billDetailsForSale.setIsActive("A");
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 		LocalDateTime now = LocalDateTime.now();
@@ -261,9 +247,9 @@ public class DigitalShopeService {
 		return shopeCreateProductForSale;
 	}
 
-	public int getSumOfProduct() {
+	public double getSumOfProduct() {
 		// TODO Auto-generated method stub
-		int totalSum = tempProductDetailsForSaleRepository.getSumOfProduct();
+		double totalSum = tempProductDetailsForSaleRepository.getSumOfProduct();
 		return totalSum;
 	}
 
@@ -376,9 +362,9 @@ public class DigitalShopeService {
 
 	}
 
-	public int getSumOfPurchaseProduct() {
+	public double getSumOfPurchaseProduct() {
 		// TODO Auto-generated method stub
-		int totalSum = tempProductDetailsForPurchaseRepository.getSumOfPurchaseProduct();
+		double totalSum = tempProductDetailsForPurchaseRepository.getSumOfPurchaseProduct();
 		return totalSum;
 	}
 
@@ -471,7 +457,7 @@ public class DigitalShopeService {
 		 PaymentHistoryDetailsPurchase paymentHistoryDetailsPurchase=new PaymentHistoryDetailsPurchase();
 		 paymentHistoryDetailsPurchase.setBillingNumber(productDetailsForPurchase.getBillingNumber());
 		 paymentHistoryDetailsPurchase.setProductName(productDetailsForPurchase.getProductName());
-		 paymentHistoryDetailsPurchase.setTotalBillAmount(productDetailsForPurchase.getTotalBillAmount()); 
+		 paymentHistoryDetailsPurchase.setTotalBillAmount(productDetailsForPurchase.getSum()); //getTotalBillAmount()
 		 paymentHistoryDetailsPurchase.setPaidAmount(productDetailsForPurchase.getPaidAmount());
 		 paymentHistoryDetailsPurchase.setUnPaidAmount(productDetailsForPurchase.getUnPaidAmount());
 		 paymentHistoryDetailsPurchase.setRePayAmount(productDetailsForPurchase.getRePayAmount());

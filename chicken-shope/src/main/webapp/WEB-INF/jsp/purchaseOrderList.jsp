@@ -202,24 +202,18 @@
           $('#paidAmountId').val(paidAmount);
           $('#unPaidAmountId').val(unPaidAmount);
    	      $('#add-new-employee-modal').modal('show');
-
         }
         
-    
         
-   	 function rePaymentFunction(id){
-   	         
-   	      var paidAmount = parseInt($("#paidAmountId").val())+parseInt($("#rePayAmountId").val());
- 	      var unPaidAmount = parseInt($("#unPaidAmountId").val())-parseInt($("#rePayAmountId").val());
+   	 function rePaymentFunction(id){         
+   	      var paidAmount = parseFloat($("#paidAmountId").val())+parseFloat($("#rePayAmountId").val());
+ 	      var unPaidAmount = parseFloat($("#unPaidAmountId").val())-parseFloat($("#rePayAmountId").val());
  	      $('#paidAmountId').val(paidAmount);
           $('#unPaidAmountId').val(unPaidAmount);
           document.productDetailsForPurchase.command.value='rePayPurchase'   
    	         
       }
-    
-        
-        
-        
+            
     </script>
 
 </html>

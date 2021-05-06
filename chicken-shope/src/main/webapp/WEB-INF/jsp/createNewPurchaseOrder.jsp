@@ -202,12 +202,10 @@
                                 <td class="text-left">${tempProductDetailsForPurchase.perKgOrPiece}</td>
                                 <td class="text-left">&#x20B9; ${tempProductDetailsForPurchase.sum}</td>
                                 <td>
-                                    <form:hidden path = "id" id = "id" value="${tempProductDetailsForPurchase.id}"/>
                                     <div class="btn-group" role="group" aria-label="Basic example">                               
-                                      <a href="#" onclick="submitFormByAction('shopeCreateOrderForPurchase','<spring:url value="/deletePurchaseProductById"/>')">
+                                      <a href="#" onclick="submitFormByAction('shopeCreateOrderForPurchase','<spring:url value="/deletePurchaseProductById/${tempProductDetailsForPurchase.id}"/>')">
                                        <button type="button" class="btn btn-danger btn-sm">Remove</button></a>                                        
                                     </div>
-                                    <%--  &nbsp; &nbsp;<a href="${contextPath}/deleteProductById?productId=${shopeCreateOrderForPurchase.id}"><button type="button" class="btn btn-danger btn-sm">Remove</button></a> --%>
                                 </td>
                             </tr>
                            </c:forEach>
@@ -272,7 +270,7 @@
     		          $("#perKgOrPiceId").val(data.unitType);
 					  $("#productUnitId").val(data.unit);
 					  $("#productRateId").val(data.rate);
-					  $("#sumId").val(parseInt(data.unit)*parseInt(data.rate));
+					  $("#sumId").val(parseFloat(data.unit)*parseFloat(data.rate));
 					  
     		        },
     		        error:function(error){
@@ -289,7 +287,7 @@
 	        success : function(data) {
 			  $("#productUnitId").val(data.unit);
 			  $("#productRateId").val(data.rate);
-			  $("#sumId").val(parseInt(data.unit)*parseInt(data.rate));
+			  $("#sumId").val(parseFloat(data.unit)*parseFloat(data.rate));
 			  
 	        },
 	        error:function(error){
@@ -304,15 +302,15 @@
     
     
     function totalSum() {
-	      var txtFirstNumberValue = parseInt($("#productUnitId").val());
-	      var txtSecondNumberValue = parseInt($("#productRateId").val());
+	      var txtFirstNumberValue = parseFloat($("#productUnitId").val());
+	      var txtSecondNumberValue = parseFloat($("#productRateId").val());
 	      if(isNaN(txtFirstNumberValue)){
 	    	  txtFirstNumberValue=0;
 	      }
 	      if(isNaN(txtSecondNumberValue)){
 	    	  txtSecondNumberValue=0;
 	      }
-	      var result = parseInt(txtFirstNumberValue) * parseInt(txtSecondNumberValue);
+	      var result = parseFloat(txtFirstNumberValue) * parseFloat(txtSecondNumberValue);
 	      if (!isNaN(result)) {
 	         $("#sumId").val(result);
 	      }
@@ -435,8 +433,8 @@
 	 }
 	 
     function paidAmountFun() {
-	      var txtFirstNumberValue = parseInt($("#billAmountId").val());
-	      var txtSecondNumberValue = parseInt($("#paidAmountId").val());
+	      var txtFirstNumberValue = parseFloat($("#billAmountId").val());
+	      var txtSecondNumberValue = parseFloat($("#paidAmountId").val());
 	      
 	      if(isNaN(txtFirstNumberValue)){
 	    	  txtFirstNumberValue=0;
@@ -444,7 +442,7 @@
 	      if(isNaN(txtSecondNumberValue)){
 	    	  txtSecondNumberValue=0;
 	      }
-	      var result = parseInt(txtFirstNumberValue) - parseInt(txtSecondNumberValue);
+	      var result = parseFloat(txtFirstNumberValue) - parseFloat(txtSecondNumberValue);
 	      if (!isNaN(result)) {
 	         $("#unPaidAmountId").val(result);
 	      }
@@ -453,7 +451,7 @@
     $( document ).ready(function() {
     	 $(".clearData").each(function() {
     		   $(this).val('');
-    	      });
+    	      });i
     });
 	
 	

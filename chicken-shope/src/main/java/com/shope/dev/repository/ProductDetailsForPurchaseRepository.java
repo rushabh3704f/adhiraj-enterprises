@@ -29,4 +29,7 @@ public interface ProductDetailsForPurchaseRepository extends JpaRepository<Produ
 	@Query(value = "UPDATE product_details_for_purchase set unit =:unit,sum=:sum where id=:id", nativeQuery = true)
 	public void updateProductDetailsForPurchaseById(@Param("unit") String unit,@Param("sum") String sum,@Param("id") Long id);
 	
+
+	
+	
 }

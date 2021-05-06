@@ -80,7 +80,7 @@
                                  <td>${productDetailsForPurchaseList.sum}</td>
                                   <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="/deleteProductDetailsForPurchase?productId=${productDetailsForPurchaseList.id}&billNumber=${productDetailsForPurchaseList.billingNumber}" class="btn btn-dark btn-sm">Delete</a>
+                                        <a href="/deleteProductDetailsForPurchase?productId=${productDetailsForPurchaseList.id}&billNumber=${productDetailsForPurchaseList.billingNumber}&sum=${productDetailsForPurchaseList.sum}" class="btn btn-dark btn-sm">Delete</a>
                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add-new-employee-modal-u" onclick="updateProductPurchase('${productDetailsForPurchaseList.id}','${productDetailsForPurchaseList.billingNumber}','${productDetailsForPurchaseList.productName}','${productDetailsForPurchaseList.unit}','${productDetailsForPurchaseList.rate}','${productDetailsForPurchaseList.sum}');">Update</button>                                    
                                     </div>
                                 </td>
@@ -90,7 +90,9 @@
                     </table>
                 </div>
                 <div class=" col-md-12 mb-3 text-center">
-                	<button class="btn btn-info"><i class="fas fa-arrow-left"></i> Go Back</button>
+                    <a href="/purchaseOrderList" class="btn btn-info">
+                      <i class="fas fa-arrow-left"> Go Back </i> 
+                    </a>
                 </div>
             </div>
         </div>
@@ -190,7 +192,6 @@
         
         
         function updateProductPurchase(id,bill,product,unit,rate,sum){
-        	
    	   	 $("#productUniqueId").val(id);
        	 $("#billingNumberId").val(bill);
        	 $("#productId").val(product);
@@ -198,12 +199,11 @@
        	 $("#rateId").val(rate);
        	 $("#sumId").val(sum);
 	     $('#add-new-employee-modal-u').modal('show');
-
    }
    
 	 
 	 function totalSumPurchase(){
-		     var totalSum = parseInt($("#unitId").val()) * parseInt($("#rateId").val());
+		     var totalSum = parseFloat($("#unitId").val()) * parseFloat($("#rateId").val());
 		     document.getElementById("sumId").value = totalSum;
 	 }
         

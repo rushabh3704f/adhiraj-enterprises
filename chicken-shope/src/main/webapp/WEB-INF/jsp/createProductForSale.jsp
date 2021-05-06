@@ -222,7 +222,6 @@
           
      
     function updateCreatedPurchaseProduct(categoryId,productNameId,unitId,unitTypeId,id,productId,rateId){
-    	 //alert(id);
     	 $("#createDivId").hide();
     	 $("#updateDivId").show();
     	 $("#categoryId").val(categoryId);
@@ -230,7 +229,7 @@
     	 $("#unitId").val(unitId);
     	 $("#unitTypeId").val(unitTypeId);
     	 $("#id").val(id);
-    	 $("#id").val(id);
+    	 $("#rateId").val(rateId);
     	 $("#productId").val(productId); 
     	 $('#add-new-product-modal').modal('show');
      }

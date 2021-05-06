@@ -80,7 +80,7 @@
                                  <td>${productDetailsForSaleList.sum}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="/deleteProductDetailsForSale?productId=${productDetailsForSaleList.id}&billNumber=${productDetailsForSaleList.billingNumber}" class="btn btn-dark btn-sm">Delete</a>
+                                        <a href="/deleteProductDetailsForSale?productId=${productDetailsForSaleList.id}&billNumber=${productDetailsForSaleList.billingNumber}&sum=${productDetailsForSaleList.sum}" class="btn btn-dark btn-sm">Delete</a>
                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add-new-employee-modal" onclick="updateProduct('${productDetailsForSaleList.id}','${productDetailsForSaleList.billingNumber}','${productDetailsForSaleList.productName}','${productDetailsForSaleList.unit}','${productDetailsForSaleList.rate}','${productDetailsForSaleList.sum}');">Update</button>                                    
                                     </div>
                                 </td>
@@ -90,7 +90,9 @@
                     </table>
                 </div>
                 <div class=" col-md-12 mb-3 text-center">
-                	<button class="btn btn-info"><i class="fas fa-arrow-left"></i> Go Back</button>
+                	 <a href="/orderList" class="btn btn-info">
+					  <i class="fas fa-arrow-left"> Go Back </i> 
+					 </a>
                 </div>
             </div>
         </div>
@@ -150,16 +152,11 @@
                     </div>
                    <form:hidden path="id" id="productUniqueId" name="productUniqueId"/>
                     
-                    
-                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">Close</button>
                     <button name="commandPass" type="submit" value="submit" class="btn btn-success btn-sm" onclick="document.productDetailsForSale.command.value='updateProduct'" >Submit</button>
                     <input type="hidden" name="command">
-                     <!-- <input type="hidden" name="id" id="id"> -->
-                    
-               
                 </div>
             </div>
         </div>
@@ -209,7 +206,7 @@
         
    	 
    	 function totalSum(){
-   		     var totalSum = parseInt($("#unitId").val()) * parseInt($("#rateId").val());
+   		     var totalSum = parseFloat($("#unitId").val()) * parseFloat($("#rateId").val());
    		     document.getElementById("sumId").value = totalSum;
    	 }
         
