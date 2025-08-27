@@ -1,0 +1,10 @@
+.navbar-nav .nav-link.active {
+    font-weight: bolder;
+}
+
+.navbar-nav .nav-link:hover {
+    font-weight: bolder;
+    
+}
+
+/* Add more common styles here */

@@ -1,0 +1,190 @@
+
+ /* The container */
+ .CheckBox_Container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .CheckBox_Container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #ffffff;
+    border: 1px solid #848484;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .CheckBox_Container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .CheckBox_Container input:checked ~ .checkmark {
+    background-color: #007e00;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .CheckBox_Container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .CheckBox_Container .checkmark:after {
+    left: 7px;
+    top: 2px;
+    width: 10px;
+    height: 15px;
+    border: solid #ccc;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .custom-color{
+      background-color: #b5d334;
+  }
+  .Pro_Cost{
+      font-size: 1rem;
+  }
+  
+  .vl {
+    border-left: 1px solid #6c82a0;
+    height: 100px;
+  }
+  .quality{
+      border: 1px solid #6c82a0;
+      padding: 10px 10px 10px 10px;
+      border-radius: 10px;
+  }
+
+  .top_bnr_hdd2{
+    font-weight: 300;
+    font-size: 18px;
+  }
+  .top_bnr_hdd3{
+    font-weight: 500;
+    font-size: 24px;
+  }
+  .restaurant-list .active{
+    background-color: #a5d416;
+    border-color: #a5d416;
+    color: #000;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .restaurant-list .item{
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .restaurant-list .item:hover{
+    font-size: 15px;
+    font-weight: 400;
+    color: #ffffff;
+    /* background-color: #dd646e; */
+    background-color: #3ecf8e;
+  }
+  .restaurant-list .item span{
+    text-align: left;
+  }
+  
+  @media only screen and (max-width: 1024px) {
+    
+    .res-block-text p {
+      font-size: 2.5rem;
+    }
+    .res-block-text{
+      margin-top: 45px;
+    }
+}
+
+/* Add To Cart Page Css*/
+.address-link a, .add-ons-txt{
+    font-size: 18px;
+    color: #b5d334;
+}
+.cart-item .fa-map-marker-alt{
+  color: #b5d334;
+}
+.btn-less-great{
+  border-radius: 0px!important;
+}
+.btn-less-great i{
+  color:#909294;
+}
+.alert-dismissible .cart-close-btn {
+  top: 3px!important;
+  right: 10px!important;
+  padding: 0rem 0rem!important;
+}
+.add-more-btn-size{
+  border-color: gray;
+  font-size: 30px;
+  padding: 15px 35px 15px 35px;
+  width: 100%;
+  margin-top: 10%;
+  color: #818181;
+}
+.cart-product-image{
+  height: 100px;
+  width: auto;
+}
+.addone-img img{
+  height: 80px;
+  width: auto;
+}
+.addone-btn button{
+  background-color: #b5d334;
+  font-weight: 700;
+}
+.addone-name{
+  color: black;
+}
+.payment-hd{
+  font-size: 22px;
+}
+.total-amount .amount-txt{
+  font-size: 18px;
+  font-weight: 400;
+}
+.total-amount .amount-price{
+  font-size: 18px;
+  font-weight: 700;
+}
+.checkout-btn{
+  font-size: 20px!important;
+  font-weight: 400!important;
+  border-radius: 0px!important;
+}
+
+.second-search{
+  border-radius: 0px;
+}
+
+/* Add To Cart Page END*/

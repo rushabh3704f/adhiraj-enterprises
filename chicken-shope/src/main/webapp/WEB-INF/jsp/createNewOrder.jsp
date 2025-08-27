@@ -14,19 +14,14 @@
     <meta name="description" content="Maizil">
     <meta name="author" content="Maizil">
     <title>Aalm Enterprises</title>
-
     <link rel="icon" type="image/png" href="img/favicon1.png">
-
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="vendor/fontawesome/css/all.min.css" rel="stylesheet">
-
     <link href="vendor/icofont/icofont.min.css" rel="stylesheet">
-
     <link href="vendor/select2/css/select2.min.css" rel="stylesheet">
-
     <link href="css/maizil.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 </head>
 

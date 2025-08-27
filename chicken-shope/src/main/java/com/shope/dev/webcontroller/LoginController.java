@@ -48,7 +48,7 @@ public class LoginController {
 		model.addAttribute("error", "UserName or Password Wrong.Please Try Again..");
 		return "login";
 	}
-
+	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 		return "login";

@@ -1,0 +1,9 @@
+Start the Spring Boot project.
+Open the H2 database console at: http://localhost:8080/h2-console
+Run the following query to insert a test user:
+INSERT INTO users (email, password) VALUES ('test@example.com', '123456');
+In your browser, go to: http://localhost:8080/
+ → the login page will appear.
+Use the following credentials to log in:
+Username: test@example.com
+Password: 123456

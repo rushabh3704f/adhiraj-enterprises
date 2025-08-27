@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contact</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Link to common custom CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Include header fragment -->
+    <!-- <div th:replace="fragments :: header (${page='booking-entry'})"></div> -->
+	<!-- <div th:replace="fragments :: header('booking-entry')"></div> -->
+	<div th:replace="~{fragments :: header('contact')}"></div>
+	
+    <div class="container mt-5">
+        <h2>Contact Details Entry Page</h2>
+        <p>Here is where you put the booking entry form or details.</p>
+        <!-- Your booking entry form goes here -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

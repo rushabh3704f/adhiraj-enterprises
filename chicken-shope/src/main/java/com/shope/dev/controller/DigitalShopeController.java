@@ -83,7 +83,9 @@ public class DigitalShopeController {
 	HttpSession session;
 	
     //===================================================================================================================
-	@RequestMapping("/createNewOrder")
+	
+	@RequestMapping(value = "/createNewOrder", method = RequestMethod.GET)
+	//@RequestMapping("/createNewOrder")
 	public String createNewOrder(Model model, @ModelAttribute("shopeCreateOrderForSale")BillingDetailsForSale billDetailsForSale, BindingResult bindingResult) {
 
 		UserData data = (UserData) session.getAttribute("userData");
@@ -214,8 +216,6 @@ public class DigitalShopeController {
 	}
 	
 	
-	
-
 	
 	@RequestMapping("/createEmployee")
 	public String renderOnEmployeePage(Model model, @ModelAttribute("shopeCreateEmployee")ShopeCreateEmployee shopeCreateEmployee, BindingResult bindingResult) {
@@ -1174,7 +1174,6 @@ public class DigitalShopeController {
 		model.addAttribute("role",data.getRole());
 		return "redirect:purchaseOrderList";
 	}
-	
-	
+		
 
 }
